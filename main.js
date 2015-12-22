@@ -5,11 +5,14 @@ var ACCURATE_CONVERSION_VALUE = 29.5735;
 var conversionValue;
 
 var DEBUG_updateCounter;
-var modeSpan, modeSpanOpen = true;
+var modeSpan;
+var modeSpanOpen = true;
 var textML, textOZ, textABV;
+var textCost;
 var radioSimple, radioAccurate;
 var resultSpan;
-var whyBox, whyBoxOpen = true;
+var whyBox;
+var whyBoxOpen = true;
 
 function init() {
 	DEBUG_updateCounter = 0; 
@@ -21,6 +24,7 @@ function init() {
 	textML = document.getElementById('milliliters');
 	textOZ = document.getElementById('ounces');
 	textABV = document.getElementById('abv');
+	textCost = document.getElementById('cost');
 	resultSpan = document.getElementById('result');
 	
 	radioSimple.checked = true;
@@ -28,6 +32,7 @@ function init() {
 	textML.value = '0';
 	textOZ.value = '0';
 	textABV.value = '0';
+	textCost.value = '0';
 	
 	conversionValue = SIMPLE_CONVERSION_VALUE;
 	
@@ -38,6 +43,7 @@ function init() {
 	textML.addEventListener('keyup', handleKeyUp, false);
 	textOZ.addEventListener('keyup', handleKeyUp, false);
 	textABV.addEventListener('keyup', handleKeyUp, false);
+	textCost.addEventListener('keyup', handleKeyUp, false);
 	
 	handleModeSpanClick(null);
 	handleWhyBoxClick(null);
@@ -187,6 +193,7 @@ function updateResult() {
 	var ml = parseFloat(textML.value);
 	var oz = parseFloat(textOZ.value);
 	var abv = parseFloat(textABV.value);
+	var cost = parseFloat(textCost.value);
 	
 	if(textML.value == '' || textOZ.value == '' || ml == 0 || oz == 0) {
 		errFound = true;
@@ -226,6 +233,22 @@ function updateResult() {
 		resultHTML.push('</p>');
 	}
 	
+	if(textCost.value == '' || cost == 0) {
+		resultHTML.push('<p class="slim">');
+		resultHTML.push('No cost entered for this bottle / drink.');
+		resultHTML.push('</p>');
+	}
+	else {
+		resultHTML.push('<p class="slim pass">');
+		resultHTML.push('<img class="icon v-align-middle" src="check-mark.png"> ');
+		resultHTML.push('<span class="v-align-middle">');
+		resultHTML.push(radioSimple.checked ?
+			'$' + cost :
+			'You entered a drink / bottle cost of $' + cost + '!');
+		resultHTML.push('</span>');
+		resultHTML.push('</p>');
+	}
+	
 	resultHTML.push(generateStats(errFound, genderDefined, oz, abv));
 	
     resultSpan.innerHTML = resultHTML.join('');
@@ -257,6 +280,10 @@ function generateStats(err, genderDefined, oz, abv) {
 			'<tr>',
 				'<td>How soon can you drive:</td>',
 				'<td>After more than ' + (totalDrinks * 2 / 3).toFixed(2) + ' hours</td>',
+			'</tr>',
+			'<tr>',
+				'<td>Cost per drink:</td>',
+				'<td>' + (textCost.value == '' || textCost.value == '0' ? 'No cost entered.' : ('$' + (parseFloat(textCost.value)/totalDrinks).toFixed(2))) + '</td>',
 			'</tr>',
 			'<tr><td colspan=2><strong>For quick reference:</strong></td></tr>',
 			'<tr>',
@@ -312,7 +339,7 @@ function formatNumber(input) {
 		
     return output;
 }
-	  
+  
 function dOut(msg) {
     if(DEBUG) console.log(msg);
 }
