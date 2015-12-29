@@ -3,7 +3,7 @@ var MAX_DECIMAL_FACTOR = 4;
 var conversionValue = 29.5735;
 
 var DEBUG_updateCounter;
-var pageHeader;
+var clearButton;
 var textOZ, textML, textABV;
 var textCost;
 var focusedTextInput;
@@ -12,14 +12,15 @@ var resultDiv, resultSpan;
 function init() {
 	DEBUG_updateCounter = 0;
 	
-	pageHeader = document.getElementById('pageHeader');
+	clearButton = document.getElementById('clearButton');
 	textOZ = document.getElementById('ounces');
 	textML = document.getElementById('milliliters');
 	textABV = document.getElementById('abv');
 	textCost = document.getElementById('cost');
 	resultDiv = document.getElementById('resultDiv');
 	resultSpan = document.getElementById('result');
-	
+
+	clearButton.addEventListener('click', handleClick, false);
 	textOZ.addEventListener('focus', handleFocus, false);
 	textML.addEventListener('focus', handleFocus, false);
 	textABV.addEventListener('focus', handleFocus, false);
@@ -36,6 +37,18 @@ function init() {
 	window.scrollTo(0,0);
 	
 	dOut('init complete, no errors');
+}
+
+function handleClick(clickEvent) {
+	dOut('click detected');
+	
+	if(clickEvent.target == clearButton) {
+		textOZ.value = '';
+		textML.value = '';
+		textABV.value = '';
+		textCost.value = '';
+		textOZ.focus();
+	}
 }
 
 function handleKeyUp(keyEvent) {
