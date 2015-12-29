@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+	
+    <title>How Many Drinks in that Drink?</title>
+	<link rel='stylesheet' type='text/css' href='style.css'>
+	<link rel='stylesheet' type='text/css' href='bs/css/bootstrap.min.css'>
+	
+	
+    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type='text/javascript' src="js/bootstrap.min.js"></script>
+	<script type='text/javascript' src='main.js'></script>
+  </head>
+
+  <body class='body'><form autocomplete='off'>
+    
+	<div class='page-header'>
+	  <h1>How many drinks in that drink?!</h1>
+	</div>
+    
+	<div class='panel panel-warning display-panel' id='inputDiv'>
+	  <div class='panel-heading'>
+	    <h3 class='panel-title'><strong class='v-align-middle'>Give me the particulars:</strong> <input type='button' class='v-align-middle' id='clearButton' value='Clear'></h3>
+	  </div>
+	  <div class='panel-body'>
+		<label for='ounces'>Volume:</label>
+	    <div class='input-group'>
+		  <span class='input-group-addon' id='sizing-addon-oz'>OZ</span>
+		  <input id='ounces' class='form-control' type='text' placeholder='[oz]' aria-describedby='sizing-addon-oz'>
+		</div>
+		<br>
+		
+		<label for='milliliters'>Volume:</label>
+	    <div class='input-group'>
+		  <span class='input-group-addon' id='sizing-addon-ml'>ML</span>
+	      <input id='milliliters' class='form-control' type='text' placeholder='[ml]' aria-describedby='sizing-addon-ml'>
+		</div>
+		<br>
+		
+		<label for='abv'>Alcohol by volume (ABV):</label>
+	    <div class='input-group'>
+		  <span class='input-group-addon' id='sizing-addon-abv'>%</span>
+		  <input id='abv' class='form-control' type='text' placeholder='[ABV]' aria-describedby='sizing-addon-abv'>
+		</div>
+		<br>
+		
+		<label for='cost'>Cost in USD:</label>
+	    <div class='input-group'>
+		  <span class='input-group-addon' id='sizing-addon-cost'>$</span>
+	      <input id='cost' class='form-control' type='text' placeholder='[cost - optional]' aria-describedby='sizing-addon-cost'></td>
+		</div>
+		<br>
+
+	  </div>
+	</div>
+	
+	<br>
+	
+	<div class='panel panel-info display-panel' id='resultDiv'>
+	  <div class='panel-heading'>
+	    <h3 class='panel-title'><strong>Results:</strong></h3>
+	  </div>
+	  <div class='panel-body'>
+	    <span id='result'>(no bottle particulars received yet)</span>
+	  </div>
+	</div><br>
+	
+  </form></body>
+</html>
