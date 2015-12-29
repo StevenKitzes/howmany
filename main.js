@@ -3,27 +3,37 @@ var MAX_DECIMAL_FACTOR = 4;
 var conversionValue = 29.5735;
 
 var DEBUG_updateCounter;
-var textML, textOZ, textABV;
+var textOZ, textML, textABV;
 var textCost;
-var resultSpan;
+var focusedTextInput;
+var resultDiv, resultSpan;
 var whyBox;
 var whyBoxOpen = true;
 
 function init() {
+	window.scrollTo(0,0);
+	
 	DEBUG_updateCounter = 0; 
   
 	whyBox = document.getElementById('why');
-	textML = document.getElementById('milliliters');
 	textOZ = document.getElementById('ounces');
+	textML = document.getElementById('milliliters');
 	textABV = document.getElementById('abv');
 	textCost = document.getElementById('cost');
+	resultDiv = document.getElementById('resultDiv');
 	resultSpan = document.getElementById('result');
 	
 	whyBox.addEventListener('click', handleWhyBoxClick, false);
-	textML.addEventListener('keyup', handleKeyUp, false);
+	textOZ.addEventListener('focus', handleFocus, false);
+	textML.addEventListener('focus', handleFocus, false);
+	textABV.addEventListener('focus', handleFocus, false);
+	textCost.addEventListener('focus', handleFocus, false);
 	textOZ.addEventListener('keyup', handleKeyUp, false);
+	textML.addEventListener('keyup', handleKeyUp, false);
 	textABV.addEventListener('keyup', handleKeyUp, false);
 	textCost.addEventListener('keyup', handleKeyUp, false);
+	
+	textOZ.focus();
 	
 	handleWhyBoxClick(null);
 	updateResult();
@@ -33,6 +43,11 @@ function init() {
 
 function handleKeyUp(keyEvent) {
 	dOut('keyup detected');
+	
+	if(keyEvent.which == 13) {
+		moveFocus(textOZ.value != '' && parseFloat(textOZ.value) != 0);
+		return;
+	}
 	
 	var target = keyEvent.target;
 	target.value = formatNumber(target.value);
@@ -65,6 +80,38 @@ function handleKeyUp(keyEvent) {
 	
 	cleanInputs();
 	updateResult();
+}
+
+function handleFocus(focusEvent) {
+	focusedTextInput = focusEvent.target;
+}
+
+function moveFocus(skip) {
+	if(focusedTextInput == textOZ) {
+		if(skip) {
+			textABV.focus();
+			focusedTextInput = textABV;
+			return;
+		}
+		textML.focus();
+		if(parseFloat(textML.value) == 0) {
+			textML.value = '';
+		}
+		focusedTextInput = textML;
+	}
+	else if(focusedTextInput == textML) {
+		textABV.focus();
+		focusedTextInput = textABV;
+	}
+	else if(focusedTextInput == textABV) {
+		textCost.focus();
+		focusedTextInput = textCost;
+	}
+	else if(focusedTextInput == textCost) {
+		resultDiv.scrollIntoView(true);
+		//textOZ.focus();
+		//focusedTextInput = textOZ;
+	}
 }
 
 function handleWhyBoxClick(clickEvent) {
@@ -149,7 +196,7 @@ function updateResult() {
 		resultHTML.push('<li class="list-group-item list-group-item-success">');
 		resultHTML.push('<img class="icon v-align-middle" src="img/check-mark.png"> ');
 		resultHTML.push('<span class="v-align-middle">');
-		resultHTML.push('Registered volume of ' + oz + ' fl.oz. (' + ml + ' ml)');
+		resultHTML.push('Registered ' + oz + ' fl.oz. (' + ml + ' ml)');
 		resultHTML.push('</span>');
 		resultHTML.push('</li>');
 	}
@@ -194,6 +241,8 @@ function updateResult() {
 	
 	resultHTML.push(generateStats(errFound, genderDefined, oz, abv));
 	
+	resultHTML.push(errFound ? '' : '<br><input type="button" value="Again!" onclick="textOZ.focus(); textOZ.select(); inputDiv.scrollIntoView(true);">');
+	
     resultSpan.innerHTML = resultHTML.join('');
 	dOut('Updates so far: ' + DEBUG_updateCounter);
 }
@@ -217,7 +266,7 @@ function generateStats(err, genderDefined, oz, abv) {
 				'<td>' + totalDrinks.toFixed(2) + '</td>',
 			'</tr>',
 			'<tr>',
-				'<td>Okay for 1 day:</td>',
+				'<td>In one 24 hour period:</td>',
 				'<td>' + (totalDrinks > 2 ? 'FDA says no' : (totalDrinks > 1 ? 'Okay for men, not women' : 'FDA says okay')) + '</td>',
 			'</tr>',
 			'<tr>',
@@ -228,33 +277,37 @@ function generateStats(err, genderDefined, oz, abv) {
 				'<td>Cost per drink:</td>',
 				'<td>' + (textCost.value == '' || textCost.value == '0' ? 'No cost entered.' : ('$' + (parseFloat(textCost.value)/totalDrinks).toFixed(2))) + '</td>',
 			'</tr>',
-			'<tr><td colspan=2><strong>For quick reference:</strong></td></tr>',
+			'<tr><td colspan=2><strong>Quick reference by volume:</strong></td></tr>',
 			'<tr>',
-				'<td>2oz of this drink would be:</td>',
+				'<td>2oz:</td>',
 				'<td>' + (ratioABV * (2 / baselineOZ)).toFixed(2) + ' drinks</td>',
 			'</tr>',
 			'<tr>',
-				'<td>4oz of this drink would be:</td>',
+				'<td>4oz:</td>',
 				'<td>' + (ratioABV * (4 / baselineOZ)).toFixed(2) + ' drinks</td>',
 			'</tr>',
 			'<tr>',
-				'<td>8oz of this drink would be:</td>',
+				'<td>8oz:</td>',
 				'<td>' + (ratioABV * (8 / baselineOZ)).toFixed(2) + ' drinks</td>',
 			'</tr>',
 			'<tr>',
-				'<td>12oz of this drink would be:</td>',
+				'<td>12oz:</td>',
 				'<td>' + (ratioABV * (12 / baselineOZ)).toFixed(2) + ' drinks</td>',
 			'</tr>',
 			'<tr>',
-				'<td>16oz of this drink would be:</td>',
+				'<td>16oz:</td>',
 				'<td>' + (ratioABV * (16 / baselineOZ)).toFixed(2) + ' drinks</td>',
 			'</tr>',
 			'<tr>',
-				'<td>22oz of this drink would be:</td>',
+				'<td><em>500ml</em>:</td>',
+				'<td>' + (ratioABV * (16.91 / baselineOZ)).toFixed(2) + ' drinks</td>',
+			'</tr>',
+			'<tr>',
+				'<td>22oz:</td>',
 				'<td>' + (ratioABV * (22 / baselineOZ)).toFixed(2) + ' drinks</td>',
 			'</tr>',
 			'<tr>',
-				'<td>750ml of this drink would be:</td>',
+				'<td><em>750ml</em>:</td>',
 				'<td>' + (ratioABV * (25.36 / baselineOZ)).toFixed(2) + ' drinks</td>',
 			'</tr>',
 		'</table>'

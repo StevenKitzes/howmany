@@ -21,43 +21,57 @@
 	  <h1>How many drinks in that drink?!</h1>
 	</div>
     
-	<div class='panel panel-warning'>
+	<div class='panel panel-warning display-panel' id='inputDiv'>
 	  <div class='panel-heading'>
 	    <h3 class='panel-title'><strong class='v-align-middle'>Give me the particulars:</strong></h3>
 	  </div>
 	  <div class='panel-body'>
-	    <table class='table-centered'>
-	      <tr>
-	        <td class='warning' colspan='2'>
-              <p class='slim slim-top'>
-			    <img class='icon v-align-middle' src='img/warn-mark.png'>
-			    <span class='v-align-middle'><strong>Note: </strong>calculations are performed on <em>ounce</em> values.<br>
-			    Milliliter values are automatically converted to ounces.</span>
-			  </p>
-	        </td>
-	      </tr>
-	      <tr>
-	        <td>Volume in oz: <input id='ounces' type='text' placeholder='[oz]'></td>
-	        <td>ABV (percentage):</td>
-	      </tr>
-	      <tr>
-	        <td>Volume in ml: <input id='milliliters' type='text' placeholder='[ml]'></td>
-	        <td><input id='abv' type='text' placeholder='[ABV]'>%</td>
-	      </tr>
-	      <tr>
-	        <td colspan=2>Cost of bottle (optional): $<input id='cost' type='text' placeholder='[cost]'></td>
-	      </tr>
-	    </table>
+		<label for='ounces'>Volume:</label>
+	    <div class='input-group'>
+		  <span class='input-group-addon' id='sizing-addon-oz'>OZ</span>
+		  <input id='ounces' class='form-control' type='text' placeholder='[oz]' aria-describedby='sizing-addon-oz'>
+		</div>
+		<br>
+		
+		<label for='milliliters'>Volume:</label>
+	    <div class='input-group'>
+		  <span class='input-group-addon' id='sizing-addon-ml'>ML</span>
+	      <input id='milliliters' class='form-control' type='text' placeholder='[ml]' aria-describedby='sizing-addon-ml'>
+		</div>
+		<br>
+		
+		<label for='abv'>Alcohol by volume (ABV):</label>
+	    <div class='input-group'>
+		  <span class='input-group-addon' id='sizing-addon-abv'>%</span>
+		  <input id='abv' class='form-control' type='text' placeholder='[ABV]' aria-describedby='sizing-addon-abv'>
+		</div>
+		<br>
+		
+		<label for='cost'>Cost in USD:</label>
+	    <div class='input-group'>
+		  <span class='input-group-addon' id='sizing-addon-cost'>$</span>
+	      <input id='cost' class='form-control' type='text' placeholder='[cost]' aria-describedby='sizing-addon-cost'></td>
+		</div>
+		<br>
+
+	    <p class='slim slim-top'>
+		  <img class='icon v-align-middle' src='img/warn-mark.png'>
+		  <span class='warning v-align-middle'>
+		    <strong>Note: </strong>calculations are performed<br>
+			on <em>ounce</em> values.  Milliliter values<br>
+			are automatically converted to ounces.
+		  </span>
+		</p>
 	  </div>
 	</div>
 	
 	<br>
 	
-	<div class='panel panel-danger'>
+	<div class='panel panel-info display-panel' id='resultDiv'>
 	  <div class='panel-heading'>
 	    <h3 class='panel-title'><strong>Results:</strong></h3>
 	  </div>
-	  <div id='resultDiv' class='panel-body'>
+	  <div class='panel-body'>
 	    <span id='result'>(no bottle particulars received yet)</span>
 	  </div>
 	</div><br>
