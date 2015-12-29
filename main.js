@@ -3,19 +3,16 @@ var MAX_DECIMAL_FACTOR = 4;
 var conversionValue = 29.5735;
 
 var DEBUG_updateCounter;
+var pageHeader;
 var textOZ, textML, textABV;
 var textCost;
 var focusedTextInput;
 var resultDiv, resultSpan;
-var whyBox;
-var whyBoxOpen = true;
 
 function init() {
-	window.scrollTo(0,0);
+	DEBUG_updateCounter = 0;
 	
-	DEBUG_updateCounter = 0; 
-  
-	whyBox = document.getElementById('why');
+	pageHeader = document.getElementById('pageHeader');
 	textOZ = document.getElementById('ounces');
 	textML = document.getElementById('milliliters');
 	textABV = document.getElementById('abv');
@@ -23,7 +20,6 @@ function init() {
 	resultDiv = document.getElementById('resultDiv');
 	resultSpan = document.getElementById('result');
 	
-	whyBox.addEventListener('click', handleWhyBoxClick, false);
 	textOZ.addEventListener('focus', handleFocus, false);
 	textML.addEventListener('focus', handleFocus, false);
 	textABV.addEventListener('focus', handleFocus, false);
@@ -35,8 +31,9 @@ function init() {
 	
 	textOZ.focus();
 	
-	handleWhyBoxClick(null);
 	updateResult();
+	
+	window.scrollTo(0,0);
 	
 	dOut('init complete, no errors');
 }
@@ -114,15 +111,18 @@ function moveFocus(skip) {
 	}
 }
 
+/*
 function handleWhyBoxClick(clickEvent) {
     var resultHTML = [];
 	
 	if(whyBoxOpen) {
-		resultHTML.push('<h1>"Why?"</h1><h6>(click to find out)</h6>');
+		resultHTML.push('<h1>"Why does this page exist?"</h1><h6>(click to find out)</h6>');
 		whyBoxOpen = false;
+		
+		inputDiv.scrollIntoView(true);
 	}
 	else {
-		resultHTML.push('<h1>"Why?"</h1><h6>(<strong>click again</strong> to close)</h6>');
+		resultHTML.push('<h6>(<strong>click again</strong> to close)</h6>');
 		resultHTML.push('<p>As the craft beer movement has taken off in recent years, and breweries have begun producing ');
 		resultHTML.push('beers of wildly varying sizes and ABV percentages, I got to wondering what exactly it meant ');
 		resultHTML.push('when someone talked about having "a beer," or even what the FDA meant when they published ');
@@ -152,10 +152,13 @@ function handleWhyBoxClick(clickEvent) {
 		resultHTML.push('<p>The results are... <em>sobering</em>.  ;)</p>');
 		resultHTML.push('<strong>(click to close)</strong>');
 		whyBoxOpen = true;
+		
+		whyBox.scrollIntoView(true);
 	}
 	
 	whyBox.innerHTML = resultHTML.join('');
 }
+*/
 
 function updateML() {
 	if(textOZ.value == '') {
