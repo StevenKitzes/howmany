@@ -1,15 +1,10 @@
 var DEBUG = true;
-
-var SIMPLE_CONVERSION_VALUE = 30;
-var ACCURATE_CONVERSION_VALUE = 29.5735;
-var conversionValue;
+var MAX_DECIMAL_FACTOR = 4;
+var conversionValue = 29.5735;
 
 var DEBUG_updateCounter;
-var modeSpan;
-var modeSpanOpen = true;
 var textML, textOZ, textABV;
 var textCost;
-var radioSimple, radioAccurate;
 var resultSpan;
 var whyBox;
 var whyBoxOpen = true;
@@ -17,35 +12,19 @@ var whyBoxOpen = true;
 function init() {
 	DEBUG_updateCounter = 0; 
   
-	modeSpan = document.getElementById('modeSpan');
 	whyBox = document.getElementById('why');
-	radioSimple = document.getElementById('simple');
-	radioAccurate = document.getElementById('accurate');
 	textML = document.getElementById('milliliters');
 	textOZ = document.getElementById('ounces');
 	textABV = document.getElementById('abv');
 	textCost = document.getElementById('cost');
 	resultSpan = document.getElementById('result');
 	
-	radioSimple.checked = true;
-	radioAccurate.checked = false;
-	textML.value = '0';
-	textOZ.value = '0';
-	textABV.value = '0';
-	textCost.value = '0';
-	
-	conversionValue = SIMPLE_CONVERSION_VALUE;
-	
-	modeSpan.addEventListener('click', handleModeSpanClick, false);
 	whyBox.addEventListener('click', handleWhyBoxClick, false);
-	radioSimple.addEventListener('click', handleRadio, false);
-	radioAccurate.addEventListener('click', handleRadio, false);
 	textML.addEventListener('keyup', handleKeyUp, false);
 	textOZ.addEventListener('keyup', handleKeyUp, false);
 	textABV.addEventListener('keyup', handleKeyUp, false);
 	textCost.addEventListener('keyup', handleKeyUp, false);
 	
-	handleModeSpanClick(null);
 	handleWhyBoxClick(null);
 	updateResult();
 	
@@ -53,7 +32,7 @@ function init() {
 }
 
 function handleKeyUp(keyEvent) {
-    dOut('keyup detected');
+	dOut('keyup detected');
 	
 	var target = keyEvent.target;
 	target.value = formatNumber(target.value);
@@ -61,6 +40,9 @@ function handleKeyUp(keyEvent) {
 	// if ML entered, modify OZ
 	if(keyEvent.target == textML) {
 		if(textML.value == '') {
+			textOZ.value = '';
+		}
+		else if(parseFloat(textML.value) == 0) {
 			textOZ.value = 0;
 		}
 		else {
@@ -72,7 +54,7 @@ function handleKeyUp(keyEvent) {
 	// else if OZ entered, modify ML
 	else if(keyEvent.target == textOZ) {
 		if(textOZ.value == '') {
-			textML.value = 0;
+			textML.value = '';
 		}
 		else {
 			var oz = parseFloat(textOZ.value);
@@ -81,29 +63,7 @@ function handleKeyUp(keyEvent) {
 		}
 	}
 	
-	updateResult();
-}
-
-function handleRadio(radioEvent) {
-	dOut('radio event detected');
-	
-	if (radioEvent.target == radioSimple || radioEvent.target == radioAccurate) {
-		dOut('accuracy mode switch detected');
-	    radioSimple.checked = (radioEvent.target == radioSimple);
-		radioAccurate.checked = (radioEvent.target == radioAccurate);
-		if(radioSimple.checked) {
-			conversionValue = SIMPLE_CONVERSION_VALUE;
-		}
-		else {
-			conversionValue = ACCURATE_CONVERSION_VALUE;
-		}
-	}
-	
-	else {
-		dOut('couldn\'t determine radio event target');
-	}
-	
-	updateML();
+	cleanInputs();
 	updateResult();
 }
 
@@ -111,11 +71,11 @@ function handleWhyBoxClick(clickEvent) {
     var resultHTML = [];
 	
 	if(whyBoxOpen) {
-		resultHTML.push('<span class="large-font">"Why?"</span><br>(click to find out)');
+		resultHTML.push('<h1>"Why?"</h1><h6>(click to find out)</h6>');
 		whyBoxOpen = false;
 	}
 	else {
-		resultHTML.push('<span class="large-font">"Why?"</span><br>(<strong>click again</strong> to close)');
+		resultHTML.push('<h1>"Why?"</h1><h6>(<strong>click again</strong> to close)</h6>');
 		resultHTML.push('<p>As the craft beer movement has taken off in recent years, and breweries have begun producing ');
 		resultHTML.push('beers of wildly varying sizes and ABV percentages, I got to wondering what exactly it meant ');
 		resultHTML.push('when someone talked about having "a beer," or even what the FDA meant when they published ');
@@ -150,30 +110,9 @@ function handleWhyBoxClick(clickEvent) {
 	whyBox.innerHTML = resultHTML.join('');
 }
 
-function handleModeSpanClick(clickEvent) {
-    var resultHTML = [];
-	
-	if(modeSpanOpen) {
-		resultHTML.push('Mode: <img id="modeHint" class="icon v-align-middle" src="q-mark.png"><br>');
-		modeSpanOpen = false;
-	}
-	else {
-		resultHTML.push('Mode: <img id="modeHint" class="icon v-align-middle" src="q-mark.png"> (click again to close)<br>');
-		resultHTML.push(
-			'<p>The true conversion ratio for milliliters to fluid ounces is approximately 29.5735:1.  I call ',
-			'this the "Accurate" conversion, but since it tends to yield very ugly numbers I also included the ',
-			'"Simple" option, which uses a conversion ration of 30:1, yielding much nicer numbers.  The "Simple" ',
-			'option has an error of roughly 1.5%.</p>');
-		modeSpanOpen = true;
-	}
-	
-	modeSpan.innerHTML = resultHTML.join('');
-}
-
 function updateML() {
 	if(textOZ.value == '') {
-		textML.value = 0;
-		textOZ.value = 0;
+		textML.value = '';
 	}
 	else {
 		var oz = parseFloat(textOZ.value);
@@ -188,7 +127,6 @@ function updateResult() {
 	var errFound = false, genderDefined = false;
 	
 	var resultHTML = [];
-	resultHTML.push('<h3 class="slim">Results:</h3>');
 	
 	var ml = parseFloat(textML.value);
 	var oz = parseFloat(textOZ.value);
@@ -197,18 +135,18 @@ function updateResult() {
 	
 	if(textML.value == '' || textOZ.value == '' || ml == 0 || oz == 0) {
 		errFound = true;
-		resultHTML.push('<p class="slim error">');
-		resultHTML.push('<img class="icon v-align-middle" src="err-mark.png"> ');
-		resultHTML.push('<span class="v-align-middle">A valid volume is needed for me to generate a result!</span>');
+		resultHTML.push('<p class="slim slim-top error">');
+		resultHTML.push('<img class="icon v-align-middle" src="img/err-mark.png"> ');
+		resultHTML.push('<span class="v-align-middle">');
+		resultHTML.push('Invalid volume');
+		resultHTML.push('</span>');
 		resultHTML.push('</p>');
 	}
 	else {
-		resultHTML.push('<p class="slim pass">');
-		resultHTML.push('<img class="icon v-align-middle" src="check-mark.png"> ');
+		resultHTML.push('<p class="slim slim-top pass">');
+		resultHTML.push('<img class="icon v-align-middle" src="img/check-mark.png"> ');
 		resultHTML.push('<span class="v-align-middle">');
-		resultHTML.push(radioSimple.checked ?
-			ml + ' ml / ' + oz + ' oz' :
-			'You entered a volume of ' + ml + ' milliliters (' + oz + ' fluid ounces)!');
+		resultHTML.push('Registered volume of ' + oz + ' fl.oz. (' + ml + ' ml)');
 		resultHTML.push('</span>');
 		resultHTML.push('</p>');
 	}
@@ -216,35 +154,34 @@ function updateResult() {
 	if(textABV.value == '' || abv == 0) {
 		errFound = true;
 		resultHTML.push('<p class="slim error">');
-		resultHTML.push('<img class="icon v-align-middle" src="err-mark.png"> ');
+		resultHTML.push('<img class="icon v-align-middle" src="img/err-mark.png"> ');
 		resultHTML.push('<span class="v-align-middle">');
-		resultHTML.push('A valid ABV (percentage of alcohol by volume) is needed for me to generate a result!');
+		resultHTML.push('Invalid ABV');
 		resultHTML.push('</span>');
 		resultHTML.push('</p>');
 	}
 	else {
 		resultHTML.push('<p class="slim pass">');
-		resultHTML.push('<img class="icon v-align-middle" src="check-mark.png"> ');
+		resultHTML.push('<img class="icon v-align-middle" src="img/check-mark.png"> ');
 		resultHTML.push('<span class="v-align-middle">');
-		resultHTML.push(radioSimple.checked ?
-			'ABV ' + abv + '%' :
-			'You entered an ABV (percentage of alcohol by volume) of ' + abv + '%!');
+		resultHTML.push('Registered ABV of ' + abv + '%');
 		resultHTML.push('</span>');
 		resultHTML.push('</p>');
 	}
 	
 	if(textCost.value == '' || cost == 0) {
-		resultHTML.push('<p class="slim">');
-		resultHTML.push('No cost entered for this bottle / drink.');
+		resultHTML.push('<p class="slim warning">');
+		resultHTML.push('<img class="icon v-align-middle" src="img/warn-mark.png"> ');
+		resultHTML.push('<span class="v-align-middle">');
+		resultHTML.push('No cost entered');
+		resultHTML.push('</span>');
 		resultHTML.push('</p>');
 	}
 	else {
 		resultHTML.push('<p class="slim pass">');
-		resultHTML.push('<img class="icon v-align-middle" src="check-mark.png"> ');
+		resultHTML.push('<img class="icon v-align-middle" src="img/check-mark.png"> ');
 		resultHTML.push('<span class="v-align-middle">');
-		resultHTML.push(radioSimple.checked ?
-			'$' + cost :
-			'You entered a drink / bottle cost of $' + cost + '!');
+		resultHTML.push('Registered cost of $' + cost);
 		resultHTML.push('</span>');
 		resultHTML.push('</p>');
 	}
@@ -268,18 +205,18 @@ function generateStats(err, genderDefined, oz, abv) {
 	var outputHTML = [];
 	
 	outputHTML.push(
-		'<table>',
+		'<table class="table-centered">',
 			'<tr>',
 				'<td>Total drinks:</td>',
 				'<td>' + totalDrinks.toFixed(2) + '</td>',
 			'</tr>',
 			'<tr>',
-				'<td>Okay for 1 sitting:</td>',
-				'<td>' + (totalDrinks > 2 ? 'Sorry, FDA says no.' : (totalDrinks > 1 ? 'Okay, men! Sorry, ladies...' : 'Good to go!')) + '</td>',
+				'<td>Okay for 1 day:</td>',
+				'<td>' + (totalDrinks > 2 ? 'FDA says no' : (totalDrinks > 1 ? 'Okay for men, not women' : 'FDA says okay')) + '</td>',
 			'</tr>',
 			'<tr>',
-				'<td>How soon can you drive:</td>',
-				'<td>After more than ' + (totalDrinks * 2 / 3).toFixed(2) + ' hours</td>',
+				'<td>When can you drive:</td>',
+				'<td>At least ' + (totalDrinks * 2 / 3).toFixed(2) + ' hours</td>',
 			'</tr>',
 			'<tr>',
 				'<td>Cost per drink:</td>',
@@ -325,7 +262,7 @@ function formatNumber(input) {
 	var output = '';
 	
 	for(var ch = 0; ch < input.length; ch++) {
-		dOut('checking char: ' + ch + ' decimals: ' + decimals);
+		//dOut('checking char: ' + ch + ' decimals: ' + decimals);
 		var current = input.charAt(ch);
 		if(current == '.' && decimals == 0) {
 			decimals++;
@@ -334,12 +271,47 @@ function formatNumber(input) {
 		if ( /[0-9]/.test(input.charAt(ch)) ) {
 			output = output + input.charAt(ch);
 		}
-		dOut('current output length: ' + output.length + ' current output: ' + output);
+		//dOut('current output length: ' + output.length + ' current output: ' + output);
 	}
 		
     return output;
 }
-  
+
+function cleanInputs() {
+	textML.value = truncateZeroes(textML.value);
+	textOZ.value = truncateZeroes(textOZ.value);
+	textABV.value = truncateZeroes(textABV.value);
+	textCost.value = truncateZeroes(textCost.value);
+}
+
+function truncateZeroes(input) {
+	if(isNaN(parseFloat(input))) return input;
+	if(lastIsDot(input)) return input;
+	
+	var maxFactor = MAX_DECIMAL_FACTOR;
+	var originalVal = parseFloat(input);
+	var val = Math.round(originalVal * Math.pow(10, maxFactor));
+	
+	var power = maxFactor;
+	while(power > 0) {
+		var factor = Math.pow(10, power);
+		if(val % factor == 0) {
+			return originalVal.toFixed(maxFactor - power);
+		}
+		power--;
+	}
+
+	return originalVal.toFixed(maxFactor - power);
+}
+
+function lastIsDot(input) {
+	var last = input.charAt(input.length - 1);
+	if(last == '.') {
+		return true;
+	}
+	return false;
+}
+
 function dOut(msg) {
     if(DEBUG) console.log(msg);
 }

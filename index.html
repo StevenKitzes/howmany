@@ -1,39 +1,65 @@
-<html>
+<!DOCTYPE html>
+<html lang='en'>
   <head>
     <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+	
     <title>How Many Drinks in that Drink?</title>
 	<link rel='stylesheet' type='text/css' href='style.css'>
+	<link rel='stylesheet' type='text/css' href='bs/css/bootstrap.min.css'>
+	
+	
+    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type='text/javascript' src="js/bootstrap.min.js"></script>
 	<script type='text/javascript' src='main.js'></script>
   </head>
 
-  <body><form autocomplete='off'>
+  <body class='body'><form autocomplete='off'>
     
-	<h1>How many drinks in that drink?!</h1>
+	<div class='page-header'>
+	  <h1>How many drinks in that drink?!</h1>
+	</div>
     
-	<h3 class='slim-bottom'>Give me the particulars:</h3>
-	<table>
-	  <tr>
-	    <td colspan='2'>
-	      <span id='modeSpan' class='v-align-middle'>Mode: <img id='modeHint' class='icon v-align-middle' src='q-mark.png'><br></span>
-	      Simple: <input id='simple' type='radio'> Accurate: <input id='accurate' type='radio'>
-	    </td>
-	  </tr>
-	  <tr>
-	    <td>Volume in ml: <input id='milliliters' type='text'></td>
-	    <td>ABV (percentage):</td>
-	  </tr>
-	  <tr>
-	    <td>Volume in oz: <input id='ounces' type='text'></td>
-	    <td><input id='abv' type='text'>%</td>
-	  </tr>
-	  <tr>
-	    <td colspan=2>Cost of bottle (optional): $<input id='cost' type='text'></td>
-	  </tr>
-	</table>
+	<div class='panel panel-warning'>
+	  <div class='panel-heading'>
+	    <h3 class='panel-title'><strong class='v-align-middle'>Give me the particulars:</strong></h3>
+	  </div>
+	  <div class='panel-body'>
+	    <table class='table-centered'>
+	      <tr>
+	        <td class='warning' colspan='2'>
+              <p class='slim slim-top'>
+			    <img class='icon v-align-middle' src='img/warn-mark.png'>
+			    <span class='v-align-middle'><strong>Note: </strong>calculations are performed on <em>ounce</em> values.<br>
+			    Milliliter values are automatically converted to ounces.</span>
+			  </p>
+	        </td>
+	      </tr>
+	      <tr>
+	        <td>Volume in oz: <input id='ounces' type='text' placeholder='[oz]'></td>
+	        <td>ABV (percentage):</td>
+	      </tr>
+	      <tr>
+	        <td>Volume in ml: <input id='milliliters' type='text' placeholder='[ml]'></td>
+	        <td><input id='abv' type='text' placeholder='[ABV]'>%</td>
+	      </tr>
+	      <tr>
+	        <td colspan=2>Cost of bottle (optional): $<input id='cost' type='text' placeholder='[cost]'></td>
+	      </tr>
+	    </table>
+	  </div>
+	</div>
 	
-	<div id='resultDiv'>
-	  <h2 class='slim'>How many drinks?</h2>
-	  <span id='result'>(no bottle particulars received yet)</span>
+	<br>
+	
+	<div class='panel panel-danger'>
+	  <div class='panel-heading'>
+	    <h3 class='panel-title'><strong>Results:</strong></h3>
+	  </div>
+	  <div id='resultDiv' class='panel-body'>
+	    <span id='result'>(no bottle particulars received yet)</span>
+	  </div>
 	</div><br>
 	
 	<div id='why'></div>

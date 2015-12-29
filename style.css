@@ -1,3 +1,8 @@
+.body {
+	background-color: antiquewhite;
+	text-align: center;
+}
+
 .error {
 	color: #cc0000;
 }
@@ -12,6 +17,12 @@
 	font-weight: bolder;
 }
 
+.panel {
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .pass {
 	color: #009900;
 }
@@ -22,59 +33,19 @@
 .slim-bottom {
 	margin-bottom: 5px;
 }
+.slim-top {
+	margin-top: 0px;
+}
+
+.table-centered {
+	margin-left: auto;
+	margin-right: auto;
+}
 
 .v-align-middle {
 	vertical-align: middle;
 }
 
-body {
-	background: antiquewhite;
-	color: black;
-	font-family: courier;
-	text-align: center;
-}
-
-input {
-	text-align: center;
-}
-
-input[type='radio'] {
-	margin-right: 20px;
-}
-
-table {
-	border-style: solid;
-	border-width: 1px;
-	margin: auto;
-}
-
-td {
-	border-style: solid;
-	border-width: 1px;
-	padding: 3px;
-	text-align: center;
-	width: 300px;
-}
-
-tr {
-	border-style: solid;
-	border-width: 1px;
-}
-
-#resultDiv {
-	border-style: solid;
-	border-width: 1px;
-	display: inline-block;
-	margin: 10px;
-}
-
-#why {
-	background: burlywood;
-	border-color: darkgoldenrod;
-	border-radius: 15px;
-	border-style: solid;
-	border-width: 1px;
-	display: inline-block;
-	font-family: serif;
-	padding: 0.25em;
+.warning {
+	color: #cc9900;
 }
