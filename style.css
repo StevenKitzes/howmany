@@ -25,6 +25,10 @@
 	font-weight: bolder;
 }
 
+.left-align {
+	text-align: left;
+}
+
 .panel {
 	display: inline-block;
 }
