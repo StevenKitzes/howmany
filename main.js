@@ -133,58 +133,64 @@ function updateResult() {
 	var abv = parseFloat(textABV.value);
 	var cost = parseFloat(textCost.value);
 	
+	// begin status notifications
+	resultHTML.push('<ul class="list-group">');
+	
 	if(textML.value == '' || textOZ.value == '' || ml == 0 || oz == 0) {
 		errFound = true;
-		resultHTML.push('<p class="slim slim-top error">');
+		resultHTML.push('<li class="list-group-item list-group-item-danger">');
 		resultHTML.push('<img class="icon v-align-middle" src="img/err-mark.png"> ');
 		resultHTML.push('<span class="v-align-middle">');
 		resultHTML.push('Invalid volume');
 		resultHTML.push('</span>');
-		resultHTML.push('</p>');
+		resultHTML.push('</li>');
 	}
 	else {
-		resultHTML.push('<p class="slim slim-top pass">');
+		resultHTML.push('<li class="list-group-item list-group-item-success">');
 		resultHTML.push('<img class="icon v-align-middle" src="img/check-mark.png"> ');
 		resultHTML.push('<span class="v-align-middle">');
 		resultHTML.push('Registered volume of ' + oz + ' fl.oz. (' + ml + ' ml)');
 		resultHTML.push('</span>');
-		resultHTML.push('</p>');
+		resultHTML.push('</li>');
 	}
 	
 	if(textABV.value == '' || abv == 0) {
 		errFound = true;
-		resultHTML.push('<p class="slim error">');
+		resultHTML.push('<li class="list-group-item list-group-item-danger">');
 		resultHTML.push('<img class="icon v-align-middle" src="img/err-mark.png"> ');
 		resultHTML.push('<span class="v-align-middle">');
 		resultHTML.push('Invalid ABV');
 		resultHTML.push('</span>');
-		resultHTML.push('</p>');
+		resultHTML.push('</li>');
 	}
 	else {
-		resultHTML.push('<p class="slim pass">');
+		resultHTML.push('<li class="list-group-item list-group-item-success">');
 		resultHTML.push('<img class="icon v-align-middle" src="img/check-mark.png"> ');
 		resultHTML.push('<span class="v-align-middle">');
 		resultHTML.push('Registered ABV of ' + abv + '%');
 		resultHTML.push('</span>');
-		resultHTML.push('</p>');
+		resultHTML.push('</li>');
 	}
 	
 	if(textCost.value == '' || cost == 0) {
-		resultHTML.push('<p class="slim warning">');
+		resultHTML.push('<li class="list-group-item list-group-item-warning">');
 		resultHTML.push('<img class="icon v-align-middle" src="img/warn-mark.png"> ');
 		resultHTML.push('<span class="v-align-middle">');
 		resultHTML.push('No cost entered');
 		resultHTML.push('</span>');
-		resultHTML.push('</p>');
+		resultHTML.push('</li>');
 	}
 	else {
-		resultHTML.push('<p class="slim pass">');
+		resultHTML.push('<li class="list-group-item list-group-item-success">');
 		resultHTML.push('<img class="icon v-align-middle" src="img/check-mark.png"> ');
 		resultHTML.push('<span class="v-align-middle">');
 		resultHTML.push('Registered cost of $' + cost);
 		resultHTML.push('</span>');
-		resultHTML.push('</p>');
+		resultHTML.push('</li>');
 	}
+	
+	// end status notifications
+	resultHTML.push('</ul>');
 	
 	resultHTML.push(generateStats(errFound, genderDefined, oz, abv));
 	
