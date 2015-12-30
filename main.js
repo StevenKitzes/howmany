@@ -47,7 +47,10 @@ function handleClick(clickEvent) {
 		textML.value = '';
 		textABV.value = '';
 		textCost.value = '';
+		
 		textOZ.focus();
+		
+		updateResult();
 	}
 }
 
@@ -284,7 +287,7 @@ function generateStats(err, genderDefined, oz, abv) {
 		'<ul class="list-group left-align">',
 			'<li class="list-group-item">',
 				'Total drinks:',
-				'<span class="badge">' + totalDrinks.toFixed(2) + '</span>',
+				'<span class="badge v-align-middle">' + totalDrinks.toFixed(2) + '</span>',
 			'</li>',
 			'<li class="list-group-item' + (totalDrinks > 2 ? ' list-group-item-danger' : (totalDrinks > 1 ? ' list-group-item-warning' : ' list-group-item-success')) + '">',
 				'In a 24 hour period:',
