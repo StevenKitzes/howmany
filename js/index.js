@@ -1,4 +1,4 @@
-var DEBUG = true;
+var DEBUG = false;
 var MAX_DECIMAL_FACTOR = 4;
 var conversionValue = 29.5735;
 
