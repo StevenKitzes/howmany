@@ -127,9 +127,9 @@ function handleFocus(focusEvent) {
 	focusedTextInput = focusEvent.target;
 }
 
-function moveFocus(skip) {
+function moveFocus(validVolume) {
 	if(focusedTextInput == textOZ) {
-		if(skip) {
+		if(validVolume) {
 			textABV.focus();
 			focusedTextInput = textABV;
 			return;
@@ -149,6 +149,11 @@ function moveFocus(skip) {
 		focusedTextInput = textCost;
 	}
 	else if(focusedTextInput == textCost) {
+		if(!validVolume) {
+			textOZ.focus();
+			focusedTextInput = textOZ;
+			return;
+		}
 		resultDiv.scrollIntoView(true);
 		//textOZ.focus();
 		//focusedTextInput = textOZ;

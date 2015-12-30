@@ -14,8 +14,23 @@
 	color: darkgray;
 }
 
-.display-panel {
+.form-control {
+	border-color: lightgray;
+}
+.form-control:focus {
+	border-color: #eecc00;
+	-webkit-box-shadow: 0px 0px 15px 5px rgba(255, 255, 190, .75);
+	-moz-box-shadow: 0px 0px 15px 5px rgba(255, 255, 190, .75);
+	box-shadow: 0px 0px 15px 5px rgba(255, 255, 190, .75);
+}
+
+.panel-custom {
+	border-color: #eecc00;
 	width: 25em;
+}
+
+.panel-heading-custom {
+	background-color: #eecc00;
 }
 
 .error {
