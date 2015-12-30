@@ -8,6 +8,21 @@
 	text-align: center;
 }
 
+.btn-dark {
+	background-color: #444444;
+	color: #eecc00;
+}
+.btn-dark:hover {
+	color: #ffffff;
+}
+.btn-dark:active {
+	background-color: #eecc00;
+	color: #444444;
+}
+.btn-slim {
+	padding: 2px 10px;
+}
+
 .colored-hr {
 	background-color: darkgray;
 	border-color: darkgray;

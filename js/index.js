@@ -243,7 +243,7 @@ function updateResult() {
 
 	resultHTML.push(generateStats(errFound, genderDefined, oz, abv));
 	
-	resultHTML.push(errFound ? '' : '<br><input type="button" value="Again!" onclick="textOZ.focus(); textOZ.select(); inputDiv.scrollIntoView(true);">');
+	resultHTML.push(errFound ? '' : '<br><input type="button" class="btn btn-dark btn-slim" value="Again!" onclick="textOZ.focus(); textOZ.select(); inputDiv.scrollIntoView(true);">');
 	
     resultSpan.innerHTML = resultHTML.join('');
 	dOut('Updates so far: ' + DEBUG_updateCounter);
