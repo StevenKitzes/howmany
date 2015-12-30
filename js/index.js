@@ -3,6 +3,7 @@ var MAX_DECIMAL_FACTOR = 4;
 var conversionValue = 29.5735;
 
 var DEBUG_updateCounter;
+var navLogoButtonLeft, navHomeButton, navAboutButton, navLogoButtonRight;
 var clearButton;
 var textOZ, textML, textABV;
 var textCost;
@@ -12,6 +13,10 @@ var resultDiv, resultSpan;
 function init() {
 	DEBUG_updateCounter = 0;
 	
+	navLogoButtonLeft = document.getElementById('navLogoButtonLeft');
+	navHomeButton = document.getElementById('navHomeButton');
+	navAboutButton = document.getElementById('navAboutButton');
+	navLogoButtonRight = document.getElementById('navLogoButtonRight');
 	clearButton = document.getElementById('clearButton');
 	textOZ = document.getElementById('ounces');
 	textML = document.getElementById('milliliters');
@@ -20,6 +25,10 @@ function init() {
 	resultDiv = document.getElementById('resultDiv');
 	resultSpan = document.getElementById('result');
 
+	navLogoButtonLeft.addEventListener('click', handleClick, false);
+	navHomeButton.addEventListener('click', handleClick, false);
+	navAboutButton.addEventListener('click', handleClick, false);
+	navLogoButtonRight.addEventListener('click', handleClick, false);
 	clearButton.addEventListener('click', handleClick, false);
 	textOZ.addEventListener('focus', handleFocus, false);
 	textML.addEventListener('focus', handleFocus, false);
@@ -51,6 +60,25 @@ function handleClick(clickEvent) {
 		textOZ.focus();
 		
 		updateResult();
+		
+		return;
+	}
+	
+	if(clickEvent.target == navLogoButtonLeft) {
+		window.location = 'index.html';
+		return;
+	}
+	if(clickEvent.target == navHomeButton) {
+		window.location = 'index.html';
+		return;
+	}
+	if(clickEvent.target == navAboutButton) {
+		window.location = 'about.html';
+		return;
+	}
+	if(clickEvent.target == navLogoButtonRight) {
+		window.location = 'index.html';
+		return;
 	}
 }
 

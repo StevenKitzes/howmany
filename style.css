@@ -44,14 +44,28 @@
 	text-align: left;
 }
 
-/* CSS override to adjust for image */
-.navbar-brand {
-	padding: 10px;
-}
-.navbar-custom {
+/* CSS override to adjust button group button colors */
+.btn-group > .btn-custom {
 	background-color: #444444;
-	color: #cccc00;
+	color: #eecc00;
 }
+.btn-group > .btn-custom:hover {
+	background-color: #444444;
+	color: #ffffff;
+}
+.btn-group > .btn-custom:visited {
+	background-color: #444444;
+	color: #dddddd;
+}
+.btn-group > .btn-custom:active {
+	background-color: #eecc00;
+	color: #444444;
+}
+.btn-group > .btn-custom:link {
+	background-color: #444444;
+	color: #0000ff;
+}
+/*
 .navbar-default .navbar-nav > li > a {
 	background-color: #444444;
 	color: #cccc00;
@@ -60,6 +74,7 @@
 	background-color: #444444;
 	color: #ffffff;
 }
+*/
 
 .panel {
 	display: inline-block;
