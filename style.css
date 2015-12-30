@@ -3,6 +3,12 @@
 	text-align: center;
 }
 
+.colored-hr {
+	background-color: darkgray;
+	border-color: darkgray;
+	color: darkgray;
+}
+
 .display-panel {
 	width: 25em;
 }
