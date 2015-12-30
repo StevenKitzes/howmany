@@ -1,4 +1,4 @@
-var DEBUG = false;
+var DEBUG = true;
 var MAX_DECIMAL_FACTOR = 4;
 var conversionValue = 29.5735;
 
@@ -83,7 +83,7 @@ function handleClick(clickEvent) {
 }
 
 function handleKeyUp(keyEvent) {
-	dOut('keyup detected');
+	dOut('key event detected: ' + keyEvent.which);
 	
 	if(keyEvent.which == 13) {
 		moveFocus(textOZ.value != '' && parseFloat(textOZ.value) != 0);
@@ -91,6 +91,7 @@ function handleKeyUp(keyEvent) {
 	}
 	
 	var target = keyEvent.target;
+	dOut('value before formatNumber: ' + target.value);
 	target.value = formatNumber(target.value);
 	
 	// if ML entered, modify OZ
@@ -155,59 +156,8 @@ function moveFocus(validVolume) {
 			return;
 		}
 		resultDiv.scrollIntoView(true);
-		//textOZ.focus();
-		//focusedTextInput = textOZ;
 	}
 }
-
-/*
-function handleWhyBoxClick(clickEvent) {
-    var resultHTML = [];
-	
-	if(whyBoxOpen) {
-		resultHTML.push('<h1>"Why does this page exist?"</h1><h6>(click to find out)</h6>');
-		whyBoxOpen = false;
-		
-		inputDiv.scrollIntoView(true);
-	}
-	else {
-		resultHTML.push('<h6>(<strong>click again</strong> to close)</h6>');
-		resultHTML.push('<p>As the craft beer movement has taken off in recent years, and breweries have begun producing ');
-		resultHTML.push('beers of wildly varying sizes and ABV percentages, I got to wondering what exactly it meant ');
-		resultHTML.push('when someone talked about having "a beer," or even what the FDA meant when they published ');
-		resultHTML.push('guidelines on "a serving" of alcohol.  You always hear that, but what does it mean? ');
-		resultHTML.push('What <em>is</em> "a serving" of alcohol?</p>');
-		resultHTML.push('<p>The FDA defines a serving of alcohol as one of the following: 1.5oz of 80 proof (40%) liquor, ');
-		resultHTML.push('5oz of 12% "table wine," or 12oz of 5% beer.  If you do the math, defining a drink as a flat, ');
-		resultHTML.push('absolute value volume of pure alcohol, then percentage wise all three of the FDA\'s serving ');
-		resultHTML.push('recommendations are equivalent: the suggested beer, wine, and liquor serving sizes all contain ');
-		resultHTML.push('<em>exactly</em> 0.6oz of pure alcohol.</p>');
-		resultHTML.push('<p>But here\'s the rub: I can\'t remember the last time I saw a craft beer on the shelf that fell ');
-		resultHTML.push('at or under 5%, and I\'d bet you haven\'t either (the odd Berlinerweiss or craft lager aside). ');
-		resultHTML.push('For that matter, most of the wine I come across is over 12%, and many liquors deviate from the ');
-		resultHTML.push('FDA\'s simple 80 proof guideline.</p>');
-		resultHTML.push('<p>So I wanted to know: when I buy a 22oz beer, and it\'s marked as 8% ABV, how many servings are ');
-		resultHTML.push('in there?  How many servings of beer does that bottle provide?  And what does it mean for your ');
-		resultHTML.push('overall health if you have been drinking 22oz bottles of craft beer, thinking to yourself, "oh, ');
-		resultHTML.push('I\'ll just have <em>a beer</em>?</p>');
-		resultHTML.push('<p>I finally did the math one day, and it caught me off guard not just that I had estimated ');
-		resultHTML.push('incorrectly, but by <em>how badly</em> wrong I was.  It\'s easy enough to lose track of how much ');
-		resultHTML.push('you\'ve had when drinking, as it is; when you start thinking about the variety of serving sizes ');
-		resultHTML.push('and ABV ratings out there on all these different brews, it\'s even easier to forget just how much ');
-		resultHTML.push('you\'re drinking!</p>');
-		resultHTML.push('<p>So I figured I\'d put together a little calculator to help you figure out just how heavy that ');
-		resultHTML.push('bottle really is.  Just pop in a few quick values - volume of drink (could be beer or anything ');
-		resultHTML.push('else) and ABV - and I\'ll tell you how many drinks you\'ve got.</p>');
-		resultHTML.push('<p>The results are... <em>sobering</em>.  ;)</p>');
-		resultHTML.push('<strong>(click to close)</strong>');
-		whyBoxOpen = true;
-		
-		whyBox.scrollIntoView(true);
-	}
-	
-	whyBox.innerHTML = resultHTML.join('');
-}
-*/
 
 function updateML() {
 	if(textOZ.value == '') {
@@ -379,11 +329,23 @@ function generateStats(err, genderDefined, oz, abv) {
 }
 
 function formatNumber(input) {
+	dOut('--------------');
+	dOut('formatting number: ' + input);
+	
+	// bounce back incoming value if last char is dot
+	if(lastIsDot(input)) {
+		dOut('bouncing back: ' + input);
+		return input;
+	}
+	else {
+		dOut('last was not dot');
+	}
+	
     var decimals = 0;
 	var output = '';
 	
 	for(var ch = 0; ch < input.length; ch++) {
-		//dOut('checking char: ' + ch + ' decimals: ' + decimals);
+		dOut('checking char: ' + ch + ' decimals: ' + decimals);
 		var current = input.charAt(ch);
 		if(current == '.' && decimals == 0) {
 			decimals++;
@@ -392,7 +354,7 @@ function formatNumber(input) {
 		if ( /[0-9]/.test(input.charAt(ch)) ) {
 			output = output + input.charAt(ch);
 		}
-		//dOut('current output length: ' + output.length + ' current output: ' + output);
+		dOut('current output length: ' + output.length + ' current output: ' + output);
 	}
 		
     return output;
@@ -426,10 +388,13 @@ function truncateZeroes(input) {
 }
 
 function lastIsDot(input) {
+	dOut('checking ' + input + ' for last-is-dot...');
 	var last = input.charAt(input.length - 1);
 	if(last == '.') {
+		dOut('returning true');
 		return true;
 	}
+	dOut('returning false');
 	return false;
 }
 
