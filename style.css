@@ -1,5 +1,11 @@
+.about-p {
+	text-align: justify;
+	text-indent: 2em;
+}
+
 .body {
 	background-color: antiquewhite;
+	padding-top: 50px;
 	text-align: center;
 }
 
@@ -21,6 +27,10 @@
 	height: 16px;
 	width: 16px;
 }
+.icon-lg {
+	height: 32px;
+	width: 32px;
+}
 
 .input-group-addon {
 	font-family: courier;
@@ -33,6 +43,23 @@
 
 .left-align {
 	text-align: left;
+}
+
+/* CSS override to adjust for image */
+.navbar-brand {
+	padding: 10px;
+}
+.navbar-custom {
+	background-color: #444444;
+	color: #cccc00;
+}
+.navbar-default .navbar-nav > li > a {
+	background-color: #444444;
+	color: #cccc00;
+}
+.navbar-default .navbar-nav > li > a:hover {
+	background-color: #444444;
+	color: #ffffff;
 }
 
 .panel {
