@@ -22,7 +22,7 @@ function init() {
 	resultDiv = document.getElementById('resultDiv');
 	resultSpan = document.getElementById('result');
 
-	clearButton.addEventListener('click', handleClick, false);
+	clearButton.addEventListener('click', clickHandler, false);
 	textOZ.addEventListener('focus', handleFocus, false);
 	textML.addEventListener('focus', handleFocus, false);
 	textABV.addEventListener('focus', handleFocus, false);
@@ -41,9 +41,9 @@ function init() {
 	dOut('init complete, no errors');
 }
 
-function handleClick(clickEvent) {
+function clickHandler(clickEvent) {
 	dOut('click detected');
-	
+
 	if(clickEvent.target == clearButton) {
 		textOZ.value = '';
 		textML.value = '';
@@ -53,6 +53,8 @@ function handleClick(clickEvent) {
 		textOZ.focus();
 		
 		updateResult();
+		
+		clearButton.blur();
 		
 		return;
 	}
@@ -220,9 +222,7 @@ function updateResult() {
 
 	resultHTML.push(generateStats(errFound, oz, abv));
 	
-	resultHTML.push(errFound ? '' : '<br><button type="button" class="btn btn-dark btn-slim" onclick="textOZ.focus(); textOZ.select(); inputDiv.scrollIntoView(true);">Again!</button>');
-	
-    resultSpan.innerHTML = resultHTML.join('');
+	resultSpan.innerHTML = resultHTML.join('');
 	dOut('Updates so far: ' + DEBUG_updateCounter);
 }
 
@@ -286,6 +286,7 @@ function generateStats(err, oz, abv) {
 				'</span>',
 			'</li>',
 		'</ul>',
+		'New particulars: <button type="button" class="btn btn-dark btn-slim" onclick="textOZ.focus(); textOZ.select(); inputDiv.scrollIntoView(true);">Go</button><br><br>',
 		'<div class="panel panel-default">',
 			'<div class="panel-heading"><h3 class="panel-title">Quick reference by volume:</h3></div>',
 				'<ul class="list-group left-align">',
