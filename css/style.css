@@ -112,8 +112,12 @@ a:link {
 	background-color: #eecc00;
 	color: #444444;
 }
+.colors-neutral {
+	background-color: #777777;
+	color: #ffffff;
+}
 .colors-warning {
-	background-color: #ccaf00;
+	background-color: #eecc00;
 	color: #ffffff;
 }
 
