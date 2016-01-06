@@ -100,6 +100,10 @@ a:link {
 	color: darkgray;
 }
 
+.colors-danger {
+	background-color: #bb0000;
+	color: #ffffff;
+}
 .colors-inverted {
 	background-color: #444444;
 	color: #eecc00;
@@ -107,6 +111,10 @@ a:link {
 .colors-main {
 	background-color: #eecc00;
 	color: #444444;
+}
+.colors-warning {
+	background-color: #ccaf00;
+	color: #ffffff;
 }
 
 .form-control {
