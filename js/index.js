@@ -173,7 +173,7 @@ function updateML() {
 function updateResult() {
 	DEBUG_updateCounter++;
 	
-	var errFound = false, genderDefined = false;
+	var errFound = false;
 	
 	var resultHTML = [];
 	
@@ -241,7 +241,7 @@ function updateResult() {
 	// end status notifications
 	debugPushString(resultHTML, '</ul>');
 
-	resultHTML.push(generateStats(errFound, genderDefined, oz, abv));
+	resultHTML.push(generateStats(errFound, oz, abv));
 	
 	resultHTML.push(errFound ? '' : '<br><input type="button" class="btn btn-dark btn-slim" value="Again!" onclick="textOZ.focus(); textOZ.select(); inputDiv.scrollIntoView(true);">');
 	
@@ -254,7 +254,7 @@ function debugPushString(arr, str) {
 	if(DEBUG) arr.push(str);
 }
 
-function generateStats(err, genderDefined, oz, abv) {
+function generateStats(err, oz, abv) {
     dOut('generating results');
     if(err) return '<p class="slim"><em>Complete the form without errors to get your results!</em></p>';
 	
