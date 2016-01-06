@@ -52,8 +52,6 @@ function init() {
 	
 	updateResult();
 	
-	window.scrollTo(0,0);
-	
 	dOut('init complete, no errors');
 }
 
@@ -149,7 +147,11 @@ function moveFocus(validVolume) {
 		textABV.focus();
 	}
 	else if(focusedTextInput == textABV) {
-		textWeight.focus();
+		if(!validVolume) {
+			textOZ.focus();
+			return;
+		}
+		scrollToTarget(resultDiv);
 	}
 	else if(focusedTextInput == textWeight) {
 		textCost.focus();
@@ -159,8 +161,12 @@ function moveFocus(validVolume) {
 			textOZ.focus();
 			return;
 		}
-		resultDiv.scrollIntoView(true);
+		scrollToTarget(resultDiv);
 	}
+}
+
+function scrollToTarget(target) {
+	target.scrollIntoView(true);
 }
 
 function updateML() {
@@ -283,7 +289,18 @@ function generateStats(err, oz, abv, weight) {
 		maxBAC = (dose / (weightInGrams * genderConstant)) * 100;
 	}
 	var hoursTillDrive = maxBAC / METABOLIC_AVERAGE;
-	var minutesTillDrive = hoursTillDrive * 60;
+	var minutesTillDrive = Math.ceil(hoursTillDrive * 60);
+	
+	if(minutesTillDrive == 60) {
+		hoursTillDrive = 1;
+		minutesTillDrive = 0;
+	}
+	else {	
+		hoursTillDrive = Math.floor(hoursTillDrive);
+		minutesTillDrive = Math.ceil(minutesTillDrive % 60);
+	}
+	var hoursString = hoursTillDrive == 1 ? 'hour' : 'hours';
+	var minutesString = minutesTillDrive == 1 ? 'minute' : 'minutes';
 	
 	var ozToOneDrink = oz / totalDrinks;
 	var ozToOneDrinkHTML = [];
@@ -310,29 +327,32 @@ function generateStats(err, oz, abv, weight) {
 			'<li class="list-group-item">',
 				'Cancer risk:',
 				'<span class="badge' + (totalDrinks > 2 ? '-right colors-danger' : (totalDrinks > 1 ? '-right colors-warning' : '')) + '">',
-				(totalDrinks > 2 ? 'high' : (totalDrinks > 1 ? 'medium' : 'low')),
+				(totalDrinks > 2 ? 'elevated' : (totalDrinks > 1 ? 'moderate' : 'minimal')),
 				'</span>',
 			'</li>',
 			'<li class="list-group-item">',
 				'Est. Max. BAC:',
-				'<span class="badge-right ' + (maxBAC >= 0.8 ? 'colors-danger' : 'colors-warning') + '">',
+				'<span class="badge-right ' + (maxBAC >= 0.8 ? 'colors-danger' : (maxBAC == 0 ? 'colors-neutral' : 'colors-warning')) + '">',
 				(haveGender ? (haveWeight ? truncateZeroes(maxBAC.toFixed(4)) : 'need weight to calculate') : 'need gender to calculate'),
 				'</span>',
 			'</li>',
 			'<li class="list-group-item">',
 				'Wait to drive:',
-				'<span class="badge-right ' + (maxBAC == 0 ? 'colors-warning' : 'colors-danger') + '">',
-				(maxBAC == 0 ? 'need BAC to calculate' : Math.floor(hoursTillDrive) + ' hours ' + Math.ceil(minutesTillDrive%60) + ' minutes'),
+				'<span class="badge-right ' + (maxBAC == 0 ? 'colors-neutral' : 'colors-danger') + '">',
+				(maxBAC == 0 ? 'need BAC to calculate' : Math.floor(hoursTillDrive) + ' ' + hoursString + ' ' + Math.ceil(minutesTillDrive%60) + ' ' + minutesString),
 				'</span>',
 			'</li>',
 			'<li class="list-group-item">',
 				'Cost per drink:',
-				'<span class="badge' + (textCost.value == '' || textCost.value == '0' ? '-right colors-warning' : '') + '">',
+				'<span class="badge' + (textCost.value == '' || textCost.value == '0' ? '-right colors-neutral' : '') + '">',
 				(textCost.value == '' || textCost.value == '0' ? 'No cost entered' : ('$' + (parseFloat(textCost.value)/totalDrinks).toFixed(2))),
 				'</span>',
 			'</li>',
+			'<li class="list-group-item">',
+				'<div class="float-left">Optional data: <button type="button" class="btn btn-dark btn-super-slim" onclick="radioMale.focus(); scrollToTarget(optionalFields);">Add</button></div>',
+				'<div class="float-right">Change values: <button type="button" class="btn btn-dark btn-super-slim" onclick="textOZ.focus(); textOZ.select(); scrollToTarget(inputDiv);">Go</button></div><br>',
+			'</li>',
 		'</ul>',
-		'New particulars: <button type="button" class="btn btn-dark btn-slim" onclick="textOZ.focus(); textOZ.select(); inputDiv.scrollIntoView(true);">Go</button><br><br>',
 		'<div class="panel panel-default">',
 			'<div class="panel-heading"><h3 class="panel-title">Quick reference by volume:</h3></div>',
 				'<ul class="list-group left-align">',

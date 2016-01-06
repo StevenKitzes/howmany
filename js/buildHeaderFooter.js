@@ -44,6 +44,8 @@ function initNav() {
 	navAboutButton.addEventListener('click', handleClick, false);
 	navThanksButton.addEventListener('click', handleClick, false);
 	navLogoButtonRight.addEventListener('click', handleClick, false);
+	
+	window.scrollTo(0,0);
 }
 
 function handleClick(clickEvent) {
