@@ -54,8 +54,6 @@ function clickHandler(clickEvent) {
 		
 		updateResult();
 		
-		clearButton.blur();
-		
 		return;
 	}
 }
