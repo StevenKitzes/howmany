@@ -1,6 +1,6 @@
-var navLogoButtonLeft, navHomeButton, navAboutButton, navLogoButtonRight;
+var navLogoButtonLeft, navHomeButton, navAboutButton, navThanksButton, navLogoButtonRight;
 
-function init() {
+function initNav() {
 	navLogoButtonLeft = document.getElementById('navLogoButtonLeft');
 	navHomeButton = document.getElementById('navHomeButton');
 	navAboutButton = document.getElementById('navAboutButton');
@@ -27,7 +27,7 @@ function handleClick(clickEvent) {
 		window.location = 'about.html';
 		return;
 	}
-	if(clickEvent.target == navAboutButton) {
+	if(clickEvent.target == navThanksButton) {
 		window.location = 'thanks.html';
 		return;
 	}
@@ -37,4 +37,4 @@ function handleClick(clickEvent) {
 	}
 }
 
-window.addEventListener('load', init, false);
+window.addEventListener('load', initNav, false);

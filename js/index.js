@@ -5,7 +5,6 @@ NORMALIZE_OZ = 12; // set by FDA
 NORMALIZE_ABV = 5; // set by FDA
 
 var DEBUG_updateCounter;
-var navLogoButtonLeft, navHomeButton, navAboutButton, navLogoButtonRight;
 var clearButton;
 var textOZ, textML, textABV;
 var textCost;
@@ -15,10 +14,6 @@ var resultDiv, resultSpan;
 function init() {
 	DEBUG_updateCounter = 0;
 	
-	navLogoButtonLeft = document.getElementById('navLogoButtonLeft');
-	navHomeButton = document.getElementById('navHomeButton');
-	navAboutButton = document.getElementById('navAboutButton');
-	navLogoButtonRight = document.getElementById('navLogoButtonRight');
 	clearButton = document.getElementById('clearButton');
 	textOZ = document.getElementById('ounces');
 	textML = document.getElementById('milliliters');
@@ -27,10 +22,6 @@ function init() {
 	resultDiv = document.getElementById('resultDiv');
 	resultSpan = document.getElementById('result');
 
-	navLogoButtonLeft.addEventListener('click', handleClick, false);
-	navHomeButton.addEventListener('click', handleClick, false);
-	navAboutButton.addEventListener('click', handleClick, false);
-	navLogoButtonRight.addEventListener('click', handleClick, false);
 	clearButton.addEventListener('click', handleClick, false);
 	textOZ.addEventListener('focus', handleFocus, false);
 	textML.addEventListener('focus', handleFocus, false);
@@ -63,23 +54,6 @@ function handleClick(clickEvent) {
 		
 		updateResult();
 		
-		return;
-	}
-	
-	if(clickEvent.target == navLogoButtonLeft) {
-		window.location = 'index.html';
-		return;
-	}
-	if(clickEvent.target == navHomeButton) {
-		window.location = 'index.html';
-		return;
-	}
-	if(clickEvent.target == navAboutButton) {
-		window.location = 'about.html';
-		return;
-	}
-	if(clickEvent.target == navLogoButtonRight) {
-		window.location = 'index.html';
 		return;
 	}
 }
@@ -246,7 +220,7 @@ function updateResult() {
 
 	resultHTML.push(generateStats(errFound, oz, abv));
 	
-	resultHTML.push(errFound ? '' : '<br><input type="button" class="btn btn-slim colors-inverted" value="Again!" onclick="textOZ.focus(); textOZ.select(); inputDiv.scrollIntoView(true);">');
+	resultHTML.push(errFound ? '' : '<br><button type="button" class="btn btn-dark btn-slim" onclick="textOZ.focus(); textOZ.select(); inputDiv.scrollIntoView(true);">Again!</button>');
 	
     resultSpan.innerHTML = resultHTML.join('');
 	dOut('Updates so far: ' + DEBUG_updateCounter);
