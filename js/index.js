@@ -7,6 +7,7 @@ NORMALIZE_ABV = 5; // set by FDA
 var DEBUG_updateCounter;
 var clearButton;
 var textOZ, textML, textABV;
+var radioMale, radioFemale;
 var textWeight, textCost;
 var focusedTextInput;
 var resultDiv, resultSpan;
@@ -20,10 +21,15 @@ function init() {
 	textABV = document.getElementById('abv');
 	textWeight = document.getElementById('bodyWeight');
 	textCost = document.getElementById('cost');
+	radioMale = document.getElementById('male');
+	radioFemale = document.getElementById('female');
 	resultDiv = document.getElementById('resultDiv');
 	resultSpan = document.getElementById('result');
 
+	document.getElementById('body').addEventListener('click', clickHandler, false);
 	clearButton.addEventListener('click', clickHandler, false);
+	radioMale.addEventListener('click', clickHandler, false);
+	radioFemale.addEventListener('click', clickHandler, false);
 	textOZ.addEventListener('focus', handleFocus, false);
 	textML.addEventListener('focus', handleFocus, false);
 	textABV.addEventListener('focus', handleFocus, false);
@@ -59,6 +65,15 @@ function clickHandler(clickEvent) {
 		updateResult();
 		
 		return;
+	}
+	
+	if(clickEvent.target == radioMale) {
+		radioMale.classList.add('active');
+		radioFemale.classList.remove('active');
+	}
+	if(clickEvent.target == radioFemale) {
+		radioMale.classList.remove('active');
+		radioFemale.classList.add('active');
 	}
 }
 

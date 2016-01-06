@@ -15,7 +15,7 @@
 	<script type='text/javascript' src='js/nav.js'></script>
   </head>
 
-  <body class='body'><form autocomplete='off'>
+  <body class='body' id='body'><form autocomplete='off'>
     <br>
 	<div class='btn-group' role='group' aria-label='...'>
       <button type='button' class='btn btn-custom' id='navLogoButtonLeft'><img alt='How many drinks in that drink?' class='icon' src='img/beer-icon.png'></button>
@@ -55,19 +55,25 @@
 		  <span class='input-group-addon' id='sizing-addon-abv'>%</span>
 		  <input id='abv' class='form-control' type='text' placeholder='[alcohol by volume / ABV]' aria-describedby='sizing-addon-abv'>
 		</div>
-		<br>
+		<hr class='colored-hr'>
+		
+		<h6><strong>(optional fields)</strong></h6>
+		<div class='btn-group-sm' role='group'>
+			<button type='button' class='btn btn-dark btn-default' id='male'>Male</button>
+			<button type='button' class='btn btn-dark btn-default' id='female'>Female</button>
+		</div>
 		
 		<!--<label for='weight'>Body Weight in Pounds:</label>-->
-	    <div class='input-group'>
+	    <div class='input-group slim-top'>
 		  <span class='input-group-addon' id='sizing-addon-weight'>lb</span>
-	      <input id='bodyWeight' class='form-control' type='text' placeholder='[optional - body weight in pounds]' aria-describedby='sizing-addon-weight'></td>
+	      <input id='bodyWeight' class='form-control' type='text' placeholder='[optional - body weight in pounds]' aria-describedby='sizing-addon-weight'>
 		</div>
 		<br>
 		
 		<!--<label for='cost'>Cost in USD:</label>-->
 	    <div class='input-group'>
 		  <span class='input-group-addon' id='sizing-addon-cost'>$</span>
-	      <input id='cost' class='form-control' type='text' placeholder='[optional - cost in USD]' aria-describedby='sizing-addon-cost'></td>
+	      <input id='cost' class='form-control' type='text' placeholder='[optional - cost in USD]' aria-describedby='sizing-addon-cost'>
 		</div>
 	  </div><!-- panel body -->
 	</div><!-- panel -->

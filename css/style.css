@@ -19,6 +19,31 @@ a:link {
 	text-decoration: none;
 }
 
+.btn-group-sm > .active {
+	background-color: #444444;
+	color: #eecc00;
+}
+.btn-group-sm > .active:hover {
+	background-color: #444444;
+	color: #eecc00;
+}
+.btn-group-sm > .active:focus {
+	background-color: #444444;
+	color: #eecc00;
+}
+.btn-group-sm > .active:visited {
+	background-color: #444444;
+	color: #eecc00;
+}
+.btn-group-sm > .active:active {
+	background-color: #444444;
+	color: #eecc00;
+}
+.btn-group-sm > .active:link {
+	background-color: #444444;
+	color: #eecc00;
+}
+
 .badge-right {
 	border-radius: 1em;
 	float: right;
@@ -126,6 +151,10 @@ h4.pill {
 	text-align: left;
 }
 
+.pad-bottom {
+	padding-bottom: .75em;
+}
+
 .panel {
 	display: inline-block;
 }
@@ -141,6 +170,13 @@ h4.pill {
 
 .slim {
 	margin: 5px;
+}
+.slim-bottom {
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+.slim-top {
+	margin-top: .3em;
 }
 
 .v-align-middle {
