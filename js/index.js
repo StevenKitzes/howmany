@@ -1,6 +1,8 @@
 var DEBUG = false;
 var MAX_DECIMAL_FACTOR = 4;
 var conversionValue = 29.5735;
+NORMALIZE_OZ = 12; // set by FDA
+NORMALIZE_ABV = 5; // set by FDA
 
 var DEBUG_updateCounter;
 var navLogoButtonLeft, navHomeButton, navAboutButton, navLogoButtonRight;
@@ -155,6 +157,7 @@ function moveFocus(validVolume) {
 			focusedTextInput = textOZ;
 			return;
 		}
+		focusedTextInput.blur();
 		resultDiv.scrollIntoView(true);
 	}
 }
@@ -243,7 +246,7 @@ function updateResult() {
 
 	resultHTML.push(generateStats(errFound, oz, abv));
 	
-	resultHTML.push(errFound ? '' : '<br><input type="button" class="btn btn-dark btn-slim" value="Again!" onclick="textOZ.focus(); textOZ.select(); inputDiv.scrollIntoView(true);">');
+	resultHTML.push(errFound ? '' : '<br><input type="button" class="btn btn-slim colors-inverted" value="Again!" onclick="textOZ.focus(); textOZ.select(); inputDiv.scrollIntoView(true);">');
 	
     resultSpan.innerHTML = resultHTML.join('');
 	dOut('Updates so far: ' + DEBUG_updateCounter);
@@ -254,78 +257,141 @@ function debugPushString(arr, str) {
 	if(DEBUG) arr.push(str);
 }
 
+// param 'oz' is the volume given by the user
+// param 'abv' is the abv rating given by the user
 function generateStats(err, oz, abv) {
     dOut('generating results');
     if(err) return '<p class="slim"><em>Complete the form without errors to get your results!</em></p>';
 	
-	var baselineABV = 5;
-	var baselineOZ = 12;
-	var ratioABV = abv / baselineABV;
-	var ratioOZ = oz / baselineOZ;
+	var ratioABV = abv / NORMALIZE_ABV;
+	var ratioOZ = oz / NORMALIZE_OZ;
 	var totalDrinks = ratioABV * ratioOZ;
+	
+	var ozToOneDrink = oz / totalDrinks;
+	var ozToOneDrinkHTML = [];
+	ozToOneDrinkHTML.push(
+		'<li class="list-group-item list-group-item-info">',
+			'<strong>' + truncateZeroes(ozToOneDrink.toFixed(2)) + 'oz:</strong>',
+			'<span class="badge-right colors-main">',
+			'1 drink',
+			'</span>',
+		'</li>'
+	);
+	var ozToOneDrinkHTMLStr = ozToOneDrinkHTML.join('');
 	
 	var outputHTML = [];
 	
 	outputHTML.push(
 		'<ul class="list-group left-align">',
-			'<li class="list-group-item">',
-				'Total drinks:',
-				'<span class="badge v-align-middle">' + totalDrinks.toFixed(2) + '</span>',
+			'<li class="list-group-item list-group-item-info">',
+				'<strong>Total drinks:</strong>',
+				'<span class="badge-right colors-main">',
+				totalDrinks.toFixed(2),
+				'</span>',
 			'</li>',
-			'<li class="list-group-item' + (totalDrinks > 2 ? ' list-group-item-danger' : (totalDrinks > 1 ? ' list-group-item-warning' : ' list-group-item-success')) + '">',
+			'<li class="list-group-item',
+			(totalDrinks > 2 ? ' list-group-item-danger' : (totalDrinks > 1 ? ' list-group-item-warning' : ' list-group-item-success')),
+			'">',
 				'In a 24 hour period:',
-				'<span class="badge">' + (totalDrinks > 2 ? 'FDA says no' : (totalDrinks > 1 ? 'Men yes, women no' : 'FDA says okay')) + '</span>',
+				'<span class="badge">',
+				(totalDrinks > 2 ? 'FDA says no' : (totalDrinks > 1 ? 'Men yes, women no' : 'FDA says okay')),
+				'</span>',
 			'</li>',
 			'<li class="list-group-item list-group-item-danger">',
-				'When can you drive:',
-				'<span class="badge">At least ' + (totalDrinks * 2 / 3).toFixed(2) + ' hours</span>',
+				'Wait to drive:',
+				'<span class="badge">',
+				(totalDrinks * 2 / 3).toFixed(2),
+				' hours after last sip</span>',
 			'</li>',
-			'<li class="list-group-item' + (textCost.value == '' || textCost.value == '0' ? ' list-group-item-warning' : '') + '">',
+			'<li class="list-group-item',
+			(textCost.value == '' || textCost.value == '0' ? ' list-group-item-warning' : ''),
+			'">',
 				'Cost per drink:',
-				'<span class="badge">' + (textCost.value == '' || textCost.value == '0' ? 'No cost entered.' : ('$' + (parseFloat(textCost.value)/totalDrinks).toFixed(2))) + '</span>',
+				'<span class="badge">',
+				(textCost.value == '' || textCost.value == '0' ? 'No cost entered.' : ('$' + (parseFloat(textCost.value)/totalDrinks).toFixed(2))),
+				'</span>',
 			'</li>',
 		'</ul>',
 		'<div class="panel panel-default">',
 			'<div class="panel-heading"><h3 class="panel-title">Quick reference by volume:</h3></div>',
 				'<ul class="list-group left-align">',
+					(ozToOneDrink < 2 ? ozToOneDrinkHTMLStr : ''),
 					'<li class="list-group-item">',
 						'2oz:',
-						'<span class="badge">' + (ratioABV * (2 / baselineOZ)).toFixed(2) + ' drinks</span>',
+						'<span class="badge">',
+						ozToDrinksFixedTwo(ratioABV, 2),
+						' drinks</span>',
 					'</li>',
+					(ozToOneDrink > 2 && ozToOneDrink < 4 ? ozToOneDrinkHTMLStr : ''),
 					'<li class="list-group-item">',
 						'4oz:',
-						'<span class="badge">' + (ratioABV * (4 / baselineOZ)).toFixed(2) + ' drinks</span>',
+						'<span class="badge">',
+						ozToDrinksFixedTwo(ratioABV, 4),
+						' drinks</span>',
 					'</li>',
+					(ozToOneDrink > 4 && ozToOneDrink < 8 ? ozToOneDrinkHTMLStr : ''),
 					'<li class="list-group-item">',
 						'8oz:',
-						'<span class="badge">' + (ratioABV * (8 / baselineOZ)).toFixed(2) + ' drinks</span>',
+						'<span class="badge">',
+						ozToDrinksFixedTwo(ratioABV, 8),
+						' drinks</span>',
 					'</li>',
-					'<li class="list-group-item">',
+					(ozToOneDrink > 8 && ozToOneDrink < 12 ? ozToOneDrinkHTMLStr : ''),
+					'<li class="list-group-item',
+					(ozToOneDrink == 12 ? ' list-group-item-info' : ''),
+					'">',
+						(ozToOneDrink == 12 ? '<strong>' : ''),
 						'12oz:',
-						'<span class="badge">' + (ratioABV * (12 / baselineOZ)).toFixed(2) + ' drinks</span>',
+						(ozToOneDrink == 12 ? '</strong>' : ''),
+						'<span class="',
+						(ozToOneDrink == 12 ? 'badge-right colors-main' : 'badge'),
+						'">',
+						ozToDrinksFixedTwo(ratioABV, 12),
+						' drink' + (ozToOneDrink == 12 ? '' : 's') + '</span>',
 					'</li>',
+					(ozToOneDrink > 12 && ozToOneDrink < 16 ? ozToOneDrinkHTMLStr : ''),
 					'<li class="list-group-item">',
 						'16oz:',
-						'<span class="badge">' + (ratioABV * (16 / baselineOZ)).toFixed(2) + ' drinks</span>',
+						'<span class="badge">',
+						ozToDrinksFixedTwo(ratioABV, 16),
+						' drinks</span>',
 					'</li>',
+					(ozToOneDrink > 16 && ozToOneDrink < 16.91 ? ozToOneDrinkHTMLStr : ''),
 					'<li class="list-group-item">',
 						'<em>500ml</em>:',
-						'<span class="badge">' + (ratioABV * (16.91 / baselineOZ)).toFixed(2) + ' drinks</span>',
+						'<span class="badge">',
+						ozToDrinksFixedTwo(ratioABV, 16.91),
+						' drinks</span>',
 					'</li>',
+					(ozToOneDrink > 16.91 && ozToOneDrink < 22 ? ozToOneDrinkHTMLStr : ''),
 					'<li class="list-group-item">',
 						'22oz:',
-						'<span class="badge">' + (ratioABV * (22 / baselineOZ)).toFixed(2) + ' drinks</span>',
+						'<span class="badge">',
+						ozToDrinksFixedTwo(ratioABV, 22),
+						' drinks</span>',
 					'</li>',
+					(ozToOneDrink > 22 && ozToOneDrink < 25.36 ? ozToOneDrinkHTMLStr : ''),
 					'<li class="list-group-item">',
 						'<em>750ml</em>:',
-						'<span class="badge">' + (ratioABV * (25.36 / baselineOZ)).toFixed(2) + ' drinks</span>',
+						'<span class="badge">',
+						ozToDrinksFixedTwo(ratioABV, 25.36),
+						' drinks</span>',
 					'</li>',
+					(ozToOneDrink > 25.36 ? ozToOneDrinkHTMLStr : ''),
 				'</ul>',
 			'</div>',
 		'</div>'
 	);
 	
 	return outputHTML.join('');
+}
+
+// param 'abv': normalized ABV calculated from user input
+// param 'oz': volume given by calling method
+// returns: drinks per given volume, as a string with at most two trailing decimal places
+function ozToDrinksFixedTwo(abv, oz) {
+	var output = (abv * (oz / NORMALIZE_OZ)).toFixed(2);
+	return truncateZeroes(output);
 }
 
 function formatNumber(input) {
@@ -367,6 +433,7 @@ function cleanInputs() {
 	textCost.value = truncateZeroes(textCost.value);
 }
 
+// expects parameter to be a string
 function truncateZeroes(input) {
 	if(isNaN(parseFloat(input))) return input;
 	if(lastIsDot(input)) return input;

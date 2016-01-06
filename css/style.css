@@ -3,15 +3,20 @@
 	text-indent: 2em;
 }
 
+.badge-right {
+	border-radius: 1em;
+	float: right;
+	font-size: 0.85em;
+	font-weight: bold;
+	padding: .1em 1em 0;
+	vertical-align: middle;
+}
+
 .body {
 	background-color: antiquewhite;
 	text-align: center;
 }
 
-.btn-dark {
-	background-color: #444444;
-	color: #eecc00;
-}
 .btn-dark:hover {
 	color: #ffffff;
 }
@@ -29,6 +34,19 @@
 	color: darkgray;
 }
 
+.colors-inverted {
+	background-color: #444444;
+	color: #eecc00;
+}
+.colors-main {
+	background-color: #eecc00;
+	color: #444444;
+}
+
+.error {
+	color: #cc0000;
+}
+
 .form-control {
 	border-color: lightgray;
 }
@@ -37,19 +55,6 @@
 	-webkit-box-shadow: 0px 0px 15px 5px rgba(255, 255, 190, .75);
 	-moz-box-shadow: 0px 0px 15px 5px rgba(255, 255, 190, .75);
 	box-shadow: 0px 0px 15px 5px rgba(255, 255, 190, .75);
-}
-
-.panel-custom {
-	border-color: #eecc00;
-	width: 25em;
-}
-
-.panel-heading-custom {
-	background-color: #eecc00;
-}
-
-.error {
-	color: #cc0000;
 }
 
 .icon {
@@ -74,40 +79,17 @@
 	text-align: left;
 }
 
-/* CSS override to adjust button group button colors */
-.btn-group > .btn-custom {
-	background-color: #444444;
-	color: #eecc00;
-}
-.btn-group > .btn-custom:hover {
-	background-color: #444444;
-	color: #ffffff;
-}
-.btn-group > .btn-custom:visited {
-	background-color: #444444;
-	color: #dddddd;
-}
-.btn-group > .btn-custom:active {
-	background-color: #eecc00;
-	color: #444444;
-}
-.btn-group > .btn-custom:link {
-	background-color: #444444;
-	color: #0000ff;
-}
-/*
-.navbar-default .navbar-nav > li > a {
-	background-color: #444444;
-	color: #cccc00;
-}
-.navbar-default .navbar-nav > li > a:hover {
-	background-color: #444444;
-	color: #ffffff;
-}
-*/
-
 .panel {
 	display: inline-block;
+}
+
+.panel-custom {
+	border-color: #eecc00;
+	width: 25em;
+}
+
+.panel-heading-custom {
+	background-color: #eecc00;
 }
 
 .pass {
@@ -136,3 +118,26 @@
 .warning {
 	color: #cc9900;
 }
+
+/* CSS override to adjust button group button colors */
+.btn-group > .btn-custom {
+	background-color: #444444;
+	color: #eecc00;
+}
+.btn-group > .btn-custom:hover {
+	background-color: #444444;
+	color: #ffffff;
+}
+.btn-group > .btn-custom:visited {
+	background-color: #444444;
+	color: #dddddd;
+}
+.btn-group > .btn-custom:active {
+	background-color: #eecc00;
+	color: #444444;
+}
+.btn-group > .btn-custom:link {
+	background-color: #444444;
+	color: #0000ff;
+}
+/* CSS override to adjust button group button colors */
