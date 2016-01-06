@@ -7,7 +7,7 @@ NORMALIZE_ABV = 5; // set by FDA
 var DEBUG_updateCounter;
 var clearButton;
 var textOZ, textML, textABV;
-var textCost;
+var textWeight, textCost;
 var focusedTextInput;
 var resultDiv, resultSpan;
 
@@ -18,6 +18,7 @@ function init() {
 	textOZ = document.getElementById('ounces');
 	textML = document.getElementById('milliliters');
 	textABV = document.getElementById('abv');
+	textWeight = document.getElementById('bodyWeight');
 	textCost = document.getElementById('cost');
 	resultDiv = document.getElementById('resultDiv');
 	resultSpan = document.getElementById('result');
@@ -26,10 +27,12 @@ function init() {
 	textOZ.addEventListener('focus', handleFocus, false);
 	textML.addEventListener('focus', handleFocus, false);
 	textABV.addEventListener('focus', handleFocus, false);
+	textWeight.addEventListener('focus', handleFocus, false);
 	textCost.addEventListener('focus', handleFocus, false);
 	textOZ.addEventListener('keyup', handleKeyUp, false);
 	textML.addEventListener('keyup', handleKeyUp, false);
 	textABV.addEventListener('keyup', handleKeyUp, false);
+	textWeight.addEventListener('keyup', handleKeyUp, false);
 	textCost.addEventListener('keyup', handleKeyUp, false);
 	
 	textOZ.focus();
@@ -48,6 +51,7 @@ function clickHandler(clickEvent) {
 		textOZ.value = '';
 		textML.value = '';
 		textABV.value = '';
+		textWeight.value = '';
 		textCost.value = '';
 		
 		textOZ.focus();
@@ -60,7 +64,7 @@ function clickHandler(clickEvent) {
 
 function handleKeyUp(keyEvent) {
 	dOut('key event detected: ' + keyEvent.which);
-	
+
 	if(keyEvent.which == 13) {
 		moveFocus(textOZ.value != '' && parseFloat(textOZ.value) != 0);
 		return;
@@ -108,30 +112,27 @@ function moveFocus(validVolume) {
 	if(focusedTextInput == textOZ) {
 		if(validVolume) {
 			textABV.focus();
-			focusedTextInput = textABV;
 			return;
 		}
 		textML.focus();
 		if(parseFloat(textML.value) == 0) {
 			textML.value = '';
 		}
-		focusedTextInput = textML;
 	}
 	else if(focusedTextInput == textML) {
 		textABV.focus();
-		focusedTextInput = textABV;
 	}
 	else if(focusedTextInput == textABV) {
+		textWeight.focus();
+	}
+	else if(focusedTextInput == textWeight) {
 		textCost.focus();
-		focusedTextInput = textCost;
 	}
 	else if(focusedTextInput == textCost) {
 		if(!validVolume) {
 			textOZ.focus();
-			focusedTextInput = textOZ;
 			return;
 		}
-		focusedTextInput.blur();
 		resultDiv.scrollIntoView(true);
 	}
 }
@@ -403,6 +404,7 @@ function cleanInputs() {
 	textML.value = truncateZeroes(textML.value);
 	textOZ.value = truncateZeroes(textOZ.value);
 	textABV.value = truncateZeroes(textABV.value);
+	textWeight.value = truncateZeroes(textWeight.value);
 	textCost.value = truncateZeroes(textCost.value);
 }
 
