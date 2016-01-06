@@ -84,10 +84,6 @@ a:link {
 	color: #444444;
 }
 
-.error {
-	color: #cc0000;
-}
-
 .form-control {
 	border-color: lightgray;
 }
@@ -111,6 +107,7 @@ h4.pill {
 	padding: 0.25em 1em;
 }
 
+/* still used for debug mode, but not in 'production' */
 .icon {
 	height: 16px;
 	width: 16px;
@@ -119,14 +116,10 @@ h4.pill {
 	height: 32px;
 	width: 32px;
 }
+/* still used for debug mode, but not in 'production' */
 
 .input-group-addon {
 	font-family: courier;
-}
-
-.large-font {
-	font-size: 2em;
-	font-weight: bolder;
 }
 
 .left-align {
@@ -146,31 +139,12 @@ h4.pill {
 	background-color: #eecc00;
 }
 
-.pass {
-	color: #009900;
-}
-
 .slim {
 	margin: 5px;
-}
-.slim-bottom {
-	margin-bottom: 5px;
-}
-.slim-top {
-	margin-top: 0px;
-}
-
-.table-centered {
-	margin-left: auto;
-	margin-right: auto;
 }
 
 .v-align-middle {
 	vertical-align: middle;
-}
-
-.warning {
-	color: #cc9900;
 }
 
 /* CSS override to adjust button group button colors */
