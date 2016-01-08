@@ -53,6 +53,12 @@ function init() {
 	updateResult();
 	
 	dOut('init complete, no errors');
+	
+	// TODO:
+	var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+	var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+	alert('width: ' + w + ' height: ' + h);
+	// TODO:
 }
 
 function clickHandler(clickEvent) {
