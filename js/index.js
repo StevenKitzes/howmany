@@ -57,7 +57,7 @@ function init() {
 	// TODO:
 	var w = window.innerWidth > 0 ? window.innerWidth : screen.width;
 	var h = window.innerHeight > 0 ? window.innerHeight : screen.height;
-	alert('width: ' + w + ' height: ' + h);
+	//alert('width: ' + w + ' height: ' + h);
 	// TODO:
 }
 
