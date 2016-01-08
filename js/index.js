@@ -55,8 +55,8 @@ function init() {
 	dOut('init complete, no errors');
 	
 	// TODO:
-	var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-	var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+	var w = window.innerWidth > 0 ? window.innerWidth : screen.width;
+	var h = window.innerHeight > 0 ? window.innerHeight : screen.height;
 	alert('width: ' + w + ' height: ' + h);
 	// TODO:
 }
