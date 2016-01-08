@@ -18,7 +18,7 @@ function initNav() {
 			'<button type="button" class="btn btn-custom" id="navLogoButtonRight"><img alt="How many drinks in that drink?" class="icon" src="img/beer-icon.png"></button>',
 		'</div>',
 		'<br><br>',
-		'<img src="img/header.png"><br><br>'
+		'<img id="headerImage" src="img/header.png"><br><br>'
 	);
 	footerHTML.push(
 		'<hr class="colored-hr">',

@@ -6,6 +6,9 @@
 	background-color: #eecc00;
 	color: #444444;
 }
+#headerImage {
+	width: 25em;
+}
 
 a {
 	color: #cc9900;
