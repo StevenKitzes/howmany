@@ -10,7 +10,12 @@
 .screen-adjusted-width {
 	width: 20em;
 }
-@media screen and (min-width: 405px) {
+@media screen and (min-width: 400px) {
+	.screen-adjusted-width {
+		width: 23em;
+	}
+}
+@media screen and (min-width: 430px) {
 	.screen-adjusted-width {
 		width: 25em;
 	}
