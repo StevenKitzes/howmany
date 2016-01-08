@@ -242,7 +242,7 @@ function updateResult() {
 		debugPushString(resultHTML, '<li class="list-group-item list-group-item-warning">');
 		debugPushString(resultHTML, '<img class="icon v-align-middle" src="img/warn-mark.png"> ');
 		debugPushString(resultHTML, '<span class="v-align-middle">');
-		debugPushString(resultHTML, 'No cost entered');
+		debugPushString(resultHTML, 'no cost given');
 		debugPushString(resultHTML, '</span>');
 		debugPushString(resultHTML, '</li>');
 	}
@@ -305,8 +305,8 @@ function generateStats(err, oz, abv, weight) {
 		hoursTillDrive = Math.floor(hoursTillDrive);
 		minutesTillDrive = Math.ceil(minutesTillDrive % 60);
 	}
-	var hoursString = hoursTillDrive == 1 ? 'hour' : 'hours';
-	var minutesString = minutesTillDrive == 1 ? 'minute' : 'minutes';
+	var hoursString = hoursTillDrive == 1 ? 'hr' : 'hrs';
+	var minutesString = minutesTillDrive == 1 ? 'min' : 'mins';
 	
 	var ozToOneDrink = oz / totalDrinks;
 	var ozToOneDrinkHTML = [];
@@ -337,26 +337,26 @@ function generateStats(err, oz, abv, weight) {
 				'</span>',
 			'</li>',
 			'<li class="list-group-item">',
-				'Est. Max. BAC:',
+				'Est max BAC:',
 				'<span class="badge-right ' + (maxBAC >= 0.8 ? 'colors-danger' : (maxBAC == 0 ? 'colors-neutral' : 'colors-warning')) + '">',
-				(haveGender ? (haveWeight ? truncateZeroes(maxBAC.toFixed(4)) : 'need weight to calculate') : 'need gender to calculate'),
+				(haveGender ? (haveWeight ? truncateZeroes(maxBAC.toFixed(4)) : 'weight needed') : 'gender needed'),
 				'</span>',
 			'</li>',
 			'<li class="list-group-item">',
 				'Wait to drive:',
 				'<span class="badge-right ' + (maxBAC == 0 ? 'colors-neutral' : 'colors-danger') + '">',
-				(maxBAC == 0 ? 'need BAC to calculate' : Math.floor(hoursTillDrive) + ' ' + hoursString + ' ' + Math.ceil(minutesTillDrive%60) + ' ' + minutesString),
+				(maxBAC == 0 ? 'BAC needed' : Math.floor(hoursTillDrive) + ' ' + hoursString + ' ' + Math.ceil(minutesTillDrive%60) + ' ' + minutesString),
 				'</span>',
 			'</li>',
 			'<li class="list-group-item">',
 				'Cost per drink:',
 				'<span class="badge' + (textCost.value == '' || textCost.value == '0' ? '-right colors-neutral' : '') + '">',
-				(textCost.value == '' || textCost.value == '0' ? 'No cost entered' : ('$' + (parseFloat(textCost.value)/totalDrinks).toFixed(2))),
+				(textCost.value == '' || textCost.value == '0' ? 'no cost given' : ('$' + (parseFloat(textCost.value)/totalDrinks).toFixed(2))),
 				'</span>',
 			'</li>',
 			'<li class="list-group-item">',
-				'<div class="float-left">Optional data: <button type="button" class="btn btn-dark btn-super-slim" onclick="radioMale.focus(); scrollToTarget(optionalFields);">Add</button></div>',
-				'<div class="float-right">Change values: <button type="button" class="btn btn-dark btn-super-slim" onclick="textOZ.focus(); textOZ.select(); scrollToTarget(inputDiv);">Go</button></div><br>',
+				'<div class="float-left"><button type="button" class="btn btn-dark btn-super-slim" onclick="radioMale.focus(); scrollToTarget(optionalFields);">Optional Data</button></div>',
+				'<div class="float-right"><button type="button" class="btn btn-dark btn-super-slim" onclick="textOZ.focus(); textOZ.select(); scrollToTarget(inputDiv);">Restart</button></div><br>',
 			'</li>',
 		'</ul>',
 		'<div class="panel panel-default">',
