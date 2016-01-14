@@ -82,12 +82,14 @@ function clickHandler(clickEvent) {
 		radioMale.classList.add('active');
 		radioFemale.classList.remove('active');
 		updateResult();
+		textWeight.focus();
 		return;
 	}
 	if(clickEvent.target == radioFemale) {
 		radioMale.classList.remove('active');
 		radioFemale.classList.add('active');
 		updateResult();
+		textWeight.focus();
 		return;
 	}
 }
@@ -136,6 +138,7 @@ function handleKeyUp(keyEvent) {
 
 function handleFocus(focusEvent) {
 	focusedTextInput = focusEvent.target;
+	focusedTextInput.select();
 }
 
 function moveFocus(validVolume) {

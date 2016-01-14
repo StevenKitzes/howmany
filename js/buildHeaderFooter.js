@@ -50,23 +50,23 @@ function initNav() {
 
 function handleClick(clickEvent) {
 	if(clickEvent.target == navLogoButtonLeft) {
-		window.location = 'index.html';
+		window.location = './';
 		return;
 	}
 	if(clickEvent.target == navHomeButton) {
-		window.location = 'index.html';
+		window.location = './';
 		return;
 	}
 	if(clickEvent.target == navAboutButton) {
-		window.location = 'about.html';
+		window.location = './about.html';
 		return;
 	}
 	if(clickEvent.target == navThanksButton) {
-		window.location = 'thanks.html';
+		window.location = './thanks.html';
 		return;
 	}
 	if(clickEvent.target == navLogoButtonRight) {
-		window.location = 'index.html';
+		window.location = './';
 		return;
 	}
 }
