@@ -18,6 +18,7 @@ var radioMale, radioFemale;
 var textWeight, textCost;
 var focusedTextInput;
 var resultDiv, resultSpan;
+var textInputs;
 
 function init() {
 	DEBUG_updateCounter = 0;
@@ -32,21 +33,17 @@ function init() {
 	radioFemale = document.getElementById('female');
 	resultDiv = document.getElementById('resultDiv');
 	resultSpan = document.getElementById('result');
+	
+	textInputs = [textOZ, textML, textABV, textWeight, textCost];
 
 	document.getElementById('body').addEventListener('click', clickHandler, false);
 	clearButton.addEventListener('click', clickHandler, false);
 	radioMale.addEventListener('click', clickHandler, false);
 	radioFemale.addEventListener('click', clickHandler, false);
-	textOZ.addEventListener('focus', handleFocus, false);
-	textML.addEventListener('focus', handleFocus, false);
-	textABV.addEventListener('focus', handleFocus, false);
-	textWeight.addEventListener('focus', handleFocus, false);
-	textCost.addEventListener('focus', handleFocus, false);
-	textOZ.addEventListener('keyup', handleKeyUp, false);
-	textML.addEventListener('keyup', handleKeyUp, false);
-	textABV.addEventListener('keyup', handleKeyUp, false);
-	textWeight.addEventListener('keyup', handleKeyUp, false);
-	textCost.addEventListener('keyup', handleKeyUp, false);
+	textInputs.forEach( function(element, index, arr) {
+		element.addEventListener('focus', handleFocus, false);
+		element.addEventListener('keyup', handleKeyUp, false);
+	});
 	
 	textOZ.focus();
 	
@@ -65,11 +62,9 @@ function clickHandler(clickEvent) {
 	dOut('click detected');
 
 	if(clickEvent.target == clearButton) {
-		textOZ.value = '';
-		textML.value = '';
-		textABV.value = '';
-		textWeight.value = '';
-		textCost.value = '';
+		textInputs.forEach( function(element, index, arr) {
+			element.value = '';
+		});
 		
 		textOZ.focus();
 		
@@ -132,11 +127,12 @@ function handleKeyUp(keyEvent) {
 		}
 	}
 	
-	cleanInputs();
+	cleanInputs(false);
 	updateResult();
 }
 
 function handleFocus(focusEvent) {
+	cleanInputs(false);
 	focusedTextInput = focusEvent.target;
 	focusedTextInput.select();
 }
@@ -160,6 +156,7 @@ function moveFocus(validVolume) {
 			textOZ.focus();
 			return;
 		}
+		cleanInputs(true);
 		scrollToTarget(resultDiv);
 	}
 	else if(focusedTextInput == textWeight) {
@@ -170,6 +167,7 @@ function moveFocus(validVolume) {
 			textOZ.focus();
 			return;
 		}
+		cleanInputs(true);
 		scrollToTarget(resultDiv);
 	}
 }
@@ -448,16 +446,7 @@ function formatNumber(input) {
 	dOut('--------------');
 	dOut('formatting number: ' + input);
 	
-	// bounce back incoming value if last char is dot
-	if(lastIsDot(input)) {
-		dOut('bouncing back: ' + input);
-		return input;
-	}
-	else {
-		dOut('last was not dot');
-	}
-	
-    var decimals = 0;
+	var decimals = 0;
 	var output = '';
 	
 	for(var ch = 0; ch < input.length; ch++) {
@@ -467,8 +456,8 @@ function formatNumber(input) {
 			decimals++;
 			output = output + '.';
 		}
-		if ( /[0-9]/.test(input.charAt(ch)) ) {
-			output = output + input.charAt(ch);
+		if ( /[0-9]/.test(current) ) {
+			output = output + current;
 		}
 		dOut('current output length: ' + output.length + ' current output: ' + output);
 	}
@@ -476,12 +465,12 @@ function formatNumber(input) {
     return output;
 }
 
-function cleanInputs() {
-	textML.value = truncateZeroes(textML.value);
-	textOZ.value = truncateZeroes(textOZ.value);
-	textABV.value = truncateZeroes(textABV.value);
-	textWeight.value = truncateZeroes(textWeight.value);
-	textCost.value = truncateZeroes(textCost.value);
+function cleanInputs(cleanAll) {
+	textInputs.forEach( function(element, index, arr) {
+		if(element != document.activeElement || cleanAll) {
+			element.value = truncateZeroes(element.value);
+		}
+	});
 }
 
 // expects parameter to be a string
