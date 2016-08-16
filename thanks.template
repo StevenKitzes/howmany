@@ -11,7 +11,7 @@
   </head>
 
   <body class='body'>
-    <div id='header'></div>
+    {{header}}
 	
 	<div class='panel panel-custom screen-adjusted-width'>
 	  <div class='panel-heading panel-heading-custom'>
@@ -44,10 +44,9 @@
 	  </div>
 	</div>
 	
-    <div class='footer' id='footer'></div>
+    {{footer}}
   
     <script type='text/javascript' src="js/jquery.min.js"></script>
     <script type='text/javascript' src="bs/js/bootstrap.min.js"></script>
-	<script type='text/javascript' src='js/buildHeaderFooter.js'></script>
   </body>
 </html>
