@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+    <title>How Many Drinks in that Drink?</title>
+	<link rel='stylesheet' type='text/css' href='bs/css/bootstrap.min.css'>
+	<link rel='stylesheet' type='text/css' href='css/style.css'>
+  </head>
+
+  <body class='body'>
+    {{header}}
+
+	<div class='panel panel-custom screen-adjusted-width'>
+	  <div class='panel-heading panel-heading-custom'>
+	    <h3 class='panel-title'><strong class='v-align-middle'>Why I Made This:</strong></h3>
+	  </div>
+	  <div class='panel-body'>
+		<p class='formatted-paragraph'>As the craft beer movement has taken off in recent years, and breweries have begun producing
+		beers of wildly varying bottle sizes and ABV percentages, I got to wondering what exactly it meant
+		when someone - myself included - talked about having "a beer."  You always hear people say that, but what does it mean?
+		How does our idea of "a beer" mesh with the FDA's published guidelines on "a serving" of alcohol?
+		What <em>is</em> "a serving" of alcohol?</p>
+		<p class='formatted-paragraph'>Well, <em>the FDA's</em> answer is that a serving of alcohol is strictly one of the following:
+		1.5oz of 80 proof (40%) liquor, 5oz of 12% "table wine," or 12oz of 5% beer.  If you do the math, defining a drink
+		as a flat, constant value volume of pure alcohol, then in terms of percentage all three of the FDA's serving
+		recommendations are equivalent: the suggested beer, wine, and liquor serving sizes all contain
+		<em>exactly</em> 0.6oz of pure alcohol.</p>
+		<p class='formatted-paragraph'>But I can't remember the last time I saw a craft beer on the shelf that fell at, much less
+		<em>under</em> 5% - the odd Berlinerweiss, honest session ale, or craft lager aside.
+		For that matter, most of the wine I come across is over 12%, and plenty of liquors deviate from the
+		FDA's simplistic 80 proof guideline.</p>
+		<p class='formatted-paragraph'>So I wanted to know: when I buy a 22oz beer, and it's marked as having a seemingly reasonable
+		6.8% ABV, how many servings are <em>really</em> in there?  How many servings of beer does that bottle provide?
+		And what does it mean for your overall health if you have been drinking 22oz bottles of craft beer, thinking to
+		yourself, "oh, I'll just have <em>a beer</em>"?</p>
+		<p class='formatted-paragraph'>I finally sat down and did the (admittedly pretty simple) math one day, and the result caught
+		me off guard.  It wasn't just that I had estimated incorrectly, but <em>how badly</em> wrong I was.  It's already
+		easy enough to lose track of how much you've had when drinking, as it is; when you start thinking about the variety
+		of serving sizes and ABV ratings out there on all these different brews, it's even easier to forget just how much
+		it is you're drinking!</p>
+		<p class='formatted-paragraph'>So I figured I'd put together a little tool to help you figure out just how heavy that
+		bottle really is.  Just pop in a few quick values - volume of drink (could be beer or anything
+		else, really) and ABV - and I'll tell you how many drinks you've got, along with a few other potentially
+		useful tidbits.</p>
+		<p class='formatted-paragraph'>I think you'll find the results... <em>sobering</em>.  ;)</p>
+		<p class='formatted-paragraph'><span class='v-align-middle'>Cheers! </span><img class='icon v-align-middle' src='img/beer-icon.png'></p>
+	  </div>
+	</div>
+
+    {{footer}}
+
+    <script type='text/javascript' src="js/jquery.min.js"></script>
+    <script type='text/javascript' src="bs/js/bootstrap.min.js"></script>
+    <script type='text/javascript' src="js/templateHandlers.js"></script>
+  </body>
+</html>
