@@ -11,7 +11,7 @@
   </head>
 
   <body class='body' id='body'><form autocomplete='off'>
-    <div id='header'></div>
+    {{header}}
 	
 	<div class='panel panel-custom screen-adjusted-width' id='inputDiv'>
 	  <div class='panel-heading panel-heading-custom'>
@@ -74,12 +74,11 @@
 	  </div>
 	</div><br>
 	
-	<div class='footer' id='footer'></div>
+	{{footer}}
 	
     <script type='text/javascript' src='js/jquery.min.js'></script>
     <script type='text/javascript' src='bs/js/bootstrap.min.js'></script>
-	<script type='text/javascript' src='js/index.js'></script>
-	<script type='text/javascript' src='js/buildHeaderFooter.js'></script>
+    <script type='text/javascript' src='js/index.js'></script>
 
   </form></body>
 </html>
