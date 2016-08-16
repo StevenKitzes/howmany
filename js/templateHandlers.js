@@ -17,7 +17,6 @@ function initNav() {
 }
 
 function handleClick(clickEvent) {
-	clickEvent.stopPropagation();
 	if(clickEvent.target == navLogoButtonLeft) {
 		window.location = './';
 		return;
