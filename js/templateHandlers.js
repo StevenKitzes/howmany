@@ -7,11 +7,11 @@ function initNav() {
 	navThanksButton = document.getElementById('navThanksButton');
 	navLogoButtonRight = document.getElementById('navLogoButtonRight');
 
-	navLogoButtonLeft.addEventListener('click', handleClick, true);
+	navLogoButtonLeft.addEventListener('click', handleClick, false);
 	navHomeButton.addEventListener('click', handleClick, false);
 	navAboutButton.addEventListener('click', handleClick, false);
 	navThanksButton.addEventListener('click', handleClick, false);
-	navLogoButtonRight.addEventListener('click', handleClick, true);
+	navLogoButtonRight.addEventListener('click', handleClick, false);
 	
 	window.scrollTo(0,0);
 }
