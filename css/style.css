@@ -1,3 +1,7 @@
+.unclickable {
+	pointer-events: none;
+}
+
 #male.active {
 	background-color: #eecc00;
 	color: #444444;
