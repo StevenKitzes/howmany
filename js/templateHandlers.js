@@ -17,23 +17,23 @@ function initNav() {
 }
 
 function handleClick(clickEvent) {
-	if(clickEvent.target == navLogoButtonLeft) {
+	if(clickEvent.currentTarget == navLogoButtonLeft) {
 		window.location = './';
 		return;
 	}
-	if(clickEvent.target == navHomeButton) {
+	if(clickEvent.currentTarget == navHomeButton) {
 		window.location = './';
 		return;
 	}
-	if(clickEvent.target == navAboutButton) {
+	if(clickEvent.currentTarget == navAboutButton) {
 		window.location = './about.html';
 		return;
 	}
-	if(clickEvent.target == navThanksButton) {
+	if(clickEvent.currentTarget == navThanksButton) {
 		window.location = './thanks.html';
 		return;
 	}
-	if(clickEvent.target == navLogoButtonRight) {
+	if(clickEvent.currentTarget == navLogoButtonRight) {
 		window.location = './';
 		return;
 	}
